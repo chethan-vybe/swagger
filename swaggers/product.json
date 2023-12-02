@@ -353,10 +353,6 @@
                   },
                   "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
                 },
-                "origin": {
-                  "$ref": "#/definitions/commonOrigin",
-                  "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
-                },
                 "tags": {
                   "type": "object",
                   "additionalProperties": {
@@ -653,10 +649,6 @@
                       },
                       "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
                     },
-                    "origin": {
-                      "$ref": "#/definitions/commonOrigin",
-                      "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
-                    },
                     "tags": {
                       "type": "object",
                       "additionalProperties": {
@@ -750,31 +742,6 @@
         }
       }
     },
-    "commonOrigin": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "User data: Created time"
-        },
-        "createdBy": {
-          "type": "string",
-          "description": "User data: Created By"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The time when the record was last updated."
-        },
-        "updatedBy": {
-          "type": "string",
-          "description": "User data: Updated By"
-        }
-      },
-      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-      "title": "Origin object"
-    },
     "commonSortOrder": {
       "type": "string",
       "enum": [
@@ -842,10 +809,6 @@
             "format": "byte"
           },
           "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
-        },
-        "origin": {
-          "$ref": "#/definitions/commonOrigin",
-          "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
         },
         "tags": {
           "type": "object",
@@ -1024,10 +987,6 @@
             "format": "byte"
           },
           "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
-        },
-        "origin": {
-          "$ref": "#/definitions/commonOrigin",
-          "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
         },
         "tags": {
           "type": "object",

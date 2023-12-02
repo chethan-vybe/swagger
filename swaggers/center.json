@@ -363,10 +363,6 @@
                   "$ref": "#/definitions/commonState",
                   "description": "State of the Center."
                 },
-                "origin": {
-                  "$ref": "#/definitions/commonOrigin",
-                  "description": "User origin details: like created time, update time etc"
-                },
                 "version": {
                   "type": "integer",
                   "format": "int32",
@@ -680,31 +676,6 @@
         }
       }
     },
-    "commonOrigin": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "User data: Created time"
-        },
-        "createdBy": {
-          "type": "string",
-          "description": "User data: Created By"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The time when the record was last updated."
-        },
-        "updatedBy": {
-          "type": "string",
-          "description": "User data: Updated By"
-        }
-      },
-      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-      "title": "Origin object"
-    },
     "commonSortOrder": {
       "type": "string",
       "enum": [
@@ -769,10 +740,6 @@
         "state": {
           "$ref": "#/definitions/commonState",
           "description": "State of the Center."
-        },
-        "origin": {
-          "$ref": "#/definitions/commonOrigin",
-          "description": "User origin details: like created time, update time etc"
         },
         "version": {
           "type": "integer",
