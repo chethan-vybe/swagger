@@ -1,664 +1,721 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "api/dmsg/enterprise/enterprise.proto",
-      "version": "version not set"
-    },
-    "tags": [
-      {
-        "name": "EnterpriseService"
-      }
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/v1/enterprises": {
-        "get": {
-          "summary": "List Enterprise",
-          "operationId": "EnterpriseService_List",
-          "responses": {
-            "200": {
-              "description": "Successful response of enterprise list",
-              "schema": {
-                "$ref": ".enterprise.EnterpriseList"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": ".enterprise.EnterpriseList"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
+  "swagger": "2.0",
+  "info": {
+    "title": "api/dmsg/enterprise/enterprise.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "EnterpriseService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/enterprises": {
+      "get": {
+        "summary": "List Enterprise",
+        "operationId": "EnterpriseService_List",
+        "responses": {
+          "200": {
+            "description": "Successful response of enterprise list",
+            "schema": {
+              "$ref": ".enterprise.EnterpriseList"
             }
           },
-          "parameters": [
-            {
-              "name": "filters",
-              "description": "Enterprise filter",
-              "in": "query",
-              "required": false,
-              "type": "object"
-            },
-            {
-              "name": "cursor",
-              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
-              "in": "query",
-              "required": false,
-              "type": "object"
-            },
-            {
-              "name": "selectFields",
-              "description": "Fields to select: id, name, description",
-              "in": "query",
-              "required": false,
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "collectionFormat": "multi"
-            }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        },
-        "post": {
-          "summary": "Create Enterprise",
-          "operationId": "EnterpriseService_Create",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": ".enterprise.EnterpriseList"
             }
           },
-          "parameters": [
-            {
-              "name": "body",
-              "description": "The Create/Update payload of the enterprise.",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        }
-      },
-      "/v1/enterprises/{id}": {
-        "get": {
-          "summary": "GetById Enterprise",
-          "operationId": "EnterpriseService_GetById",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "id",
-              "description": "Unique Identifier of the Enterprise",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        },
-        "delete": {
-          "summary": "Delete Enterprise",
-          "operationId": "EnterpriseService_Delete",
-          "responses": {
-            "200": {
-              "description": "Successful deleted the enterprise resource",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "400": {
-              "description": "Invalid data, Bad Request",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "404": {
-              "description": "Enterprise Not Found",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "id",
-              "description": "Unique Identifier of the Enterprise",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        },
-        "put": {
-          "summary": "Update Enterprise",
-          "operationId": "EnterpriseService_Update",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterpriseResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "id",
-              "description": "Unique identifier for the enterprise.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "example": {
-                  "name": "dummy",
-                  "email": "admin@admin.com",
-                  "contact": "+91 1234567890"
-                },
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "Name of the enterprise."
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Description for the enterprise."
-                  },
-                  "address": {
-                    "$ref": "#/definitions/commonAddress",
-                    "description": "Address of the enterprise."
-                  },
-                  "contactNumber": {
-                    "type": "string",
-                    "description": "Contact of the enterprise."
-                  },
-                  "email": {
-                    "type": "string",
-                    "description": "EmailID of the enterprise."
-                  },
-                  "state": {
-                    "$ref": "#/definitions/commonState",
-                    "description": "State of the enterprise."
-                  },
-                  "tenantIdentifier": {
-                    "type": "string",
-                    "description": "Unique Identifier of the tenant in which the current enterprise belongs to."
-                  },
-                  "origin": {
-                    "type": "object",
-                    "$ref": "#/definitions/commonOrigin",
-                    "description": "User origin details: like created time, update time etc"
-                  },
-                  "version": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Version stores the DB version of the enterprise."
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Tags stores the key value pairs of the enterprise."
-                  }
-                },
-                "description": "The Create/Update payload of the enterprise.",
-                "title": "Enterprise create/update data payload",
-                "required": [
-                  "name",
-                  "address",
-                  "contact",
-                  "email",
-                  "tenantIdentifier"
-                ]
-              }
-            }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        }
-      },
-      "/v1/enterprises/{name}": {
-        "get": {
-          "summary": "GetByName Enterprise",
-          "operationId": "EnterpriseService_GetByName",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/enterpriseEnterprise"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "name",
-              "description": "Unique name of the Enterprise",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "tags": [
-            "EnterpriseService"
-          ]
-        }
-      }
-    },
-    "definitions": {
-      "commonAddress": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name in the address"
-          },
-          "street": {
-            "type": "string",
-            "description": "Address Line 1 for Street, buiding/flat details etc"
-          },
-          "area": {
-            "type": "string",
-            "description": "Address Line 2 for village/sector"
-          },
-          "locality": {
-            "type": "string",
-            "description": "Nearest locality of the address within the given pincode."
-          },
-          "city": {
-            "type": "string",
-            "description": "City"
-          },
-          "state": {
-            "type": "string",
-            "description": "State or Province"
-          },
-          "pincode": {
-            "type": "integer",
-            "format": "int32",
-            "example": 94101,
-            "description": "ZIP or Postal Code"
           }
         },
-        "description": "An address associated with an enterprise",
-        "title": "Address object"
-      },
-      "commonCursor": {
-        "type": "object",
-        "properties": {
-          "offset": {
-            "type": "number",
-            "format": "int32",
-            "description": "Page Offset"
-          },
-          "pageNum": {
-            "type": "number",
-            "format": "int32",
-            "description": "Page Number"
-          },
-          "limit": {
-            "type": "number",
-            "format": "int32",
-            "description": "Defines the page size/limit"
-          },
-          "totalPages": {
-            "type": "number",
-            "format": "int64",
-            "description": "Total number of pages to be fetched."
-          },
-          "totalRecords": {
-            "type": "number",
-            "format": "int64",
-            "description": "Total number of records."
-          }
-        },
-        "description": "Cursor helps in filtering the various list response.",
-        "title": "Cursor is used as filter in list operation."
-      },
-      "commonKeyValue": {
-        "type": "object",
-        "properties": {
-          "key": {
+        "parameters": [
+          {
+            "name": "filters.state",
+            "description": "State, filters based on the enterprise state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "description": "Key of the attribute."
+            "enum": [
+              "STATE_UNSPECIFIED",
+              "STATE_CREATED",
+              "STATE_ACTIVE",
+              "STATE_SUSPENDED",
+              "STATE_CLOSED"
+            ],
+            "default": "STATE_UNSPECIFIED"
           },
-          "value": {
-            "type": "string",
-            "description": "Value of the attribute assoiacteed wwith the key."
-          }
-        },
-        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
-        "title": "KeyValue is used to store the key value information.",
-        "required": [
-          "key",
-          "value"
-        ]
-      },
-      "commonOrder": {
-        "type": "object",
-        "properties": {
-          "orderBy": {
-            "type": "string",
-            "description": "Sort by attributes used for sorting based on what field of the enterprise."
-          },
-          "order": {
-            "$ref": "#/definitions/commonSortOrder",
-            "description": "Sort order can be ASCENDING/DESCENDING"
-          }
-        }
-      },
-      "commonOrigin": {
-        "type": "object",
-        "properties": {
-          "createdAt": {
-            "type": "object",
-            "format": "date-time",
-            "description": "User data: Created time"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "User data: Created By"
-          },
-          "updatedAt": {
-            "type": "object",
-            "format": "date-time",
-            "description": "The time when the record was last updated."
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "User data: Updated By"
-          }
-        },
-        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-        "title": "Origin object"
-      },
-      "commonSortOrder": {
-        "type": "string",
-        "enum": [
-          "SORT_ORDER_UNSPECIFIED",
-          "SORT_ORDER_ASCENDING",
-          "SORT_ORDER_DESCENDING"
-        ],
-        "default": "SORT_ORDER_UNSPECIFIED"
-      },
-      "commonState": {
-        "type": "string",
-        "enum": [
-          "STATE_UNSPECIFIED",
-          "STATE_CREATED",
-          "STATE_ACTIVE",
-          "STATE_SUSPENDED",
-          "STATE_CLOSED"
-        ],
-        "default": "STATE_UNSPECIFIED",
-        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
-      },
-      "enterpriseEnterprise": {
-        "type": "object",
-        "example": {
-          "name": "dummy",
-          "email": "admin@admin.com",
-          "contact": "+91 1234567890"
-        },
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the enterprise."
-          },
-          "id": {
-            "type": "string",
-            "description": "Unique identifier for the enterprise."
-          },
-          "description": {
-            "type": "string",
-            "description": "Description for the enterprise."
-          },
-          "address": {
-            "$ref": "#/definitions/commonAddress",
-            "description": "Address of the enterprise."
-          },
-          "contactNumber": {
-            "type": "string",
-            "description": "Contact of the enterprise."
-          },
-          "email": {
-            "type": "string",
-            "description": "EmailID of the enterprise."
-          },
-          "state": {
-            "$ref": "#/definitions/commonState",
-            "description": "State of the enterprise."
-          },
-          "tenantIdentifier": {
-            "type": "string",
-            "description": "Unique Identifier of the tenant in which the current enterprise belongs to."
-          },
-          "origin": {
-            "type": "object",
-            "$ref": "#/definitions/commonOrigin",
-            "description": "User origin details: like created time, update time etc"
-          },
-          "version": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Version stores the DB version of the enterprise."
-          },
-          "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            },
-            "description": "Tags stores the key value pairs of the enterprise."
-          }
-        },
-        "description": "The Create/Update payload of the enterprise.",
-        "title": "Enterprise create/update data payload",
-        "required": [
-          "name",
-          "address",
-          "contact",
-          "email",
-          "tenantIdentifier"
-        ]
-      },
-      "enterpriseEnterpriseFilter": {
-        "type": "object",
-        "properties": {
-          "pattern": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/commonKeyValue"
-            },
-            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
-          },
-          "state": {
-            "$ref": "#/definitions/commonState",
-            "description": "State, filters based on the enterprise state"
-          },
-          "order": {
-            "type": "object",
-            "$ref": "#/definitions/commonOrder",
-            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
-          }
-        },
-        "description": "EnterpriseFilter request paylod",
-        "title": "EnterpriseFilter payload detail"
-      },
-      "enterpriseEnterpriseListResponse": {
-        "type": "object",
-        "properties": {
-          "enterprises": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/enterpriseEnterprise"
-            },
-            "description": "List of enterprises."
-          },
-          "cursor": {
-            "type": "object",
-            "$ref": "#/definitions/commonCursor",
-            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
-          }
-        },
-        "description": "Enterprise list response details.",
-        "title": "Enterprise list response details"
-      },
-      "enterpriseEnterpriseResponse": {
-        "type": "object",
-        "example": {
-          "status": "Enterprise created Successfully."
-        },
-        "properties": {
-          "status": {
-            "type": "string",
-            "description": "Status message of the operation."
-          }
-        },
-        "description": "Enterprise create/update response details.",
-        "title": "Enterprise create/update response details"
-      },
-      "protobufAny": {
-        "type": "object",
-        "properties": {
-          "@type": {
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
             "type": "string"
-          }
-        },
-        "additionalProperties": {}
-      },
-      "rpcStatus": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
+          },
+          {
+            "name": "cursor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
+            "type": "number",
             "format": "int32"
           },
-          "message": {
-            "type": "string"
+          {
+            "name": "cursor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
           },
-          "details": {
+          {
+            "name": "cursor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "cursor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "cursor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
             "type": "array",
             "items": {
-              "type": "object",
-              "$ref": "#/definitions/protobufAny"
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      },
+      "post": {
+        "summary": "Create Enterprise",
+        "operationId": "EnterpriseService_Create",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The Create/Update payload of the enterprise.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      }
+    },
+    "/v1/enterprises/{id}": {
+      "get": {
+        "summary": "GetById Enterprise",
+        "operationId": "EnterpriseService_GetById",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the Enterprise",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Enterprise",
+        "operationId": "EnterpriseService_Delete",
+        "responses": {
+          "200": {
+            "description": "Successful deleted the enterprise resource",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "400": {
+            "description": "Invalid data, Bad Request",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "404": {
+            "description": "Enterprise Not Found",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the Enterprise",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      },
+      "put": {
+        "summary": "Update Enterprise",
+        "operationId": "EnterpriseService_Update",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterpriseResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier for the enterprise.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "example": {
+                "name": "dummy",
+                "email": "admin@admin.com",
+                "contact": "+91 1234567890"
+              },
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the enterprise."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description for the enterprise."
+                },
+                "address": {
+                  "$ref": "#/definitions/commonAddress",
+                  "description": "Address of the enterprise."
+                },
+                "contactNumber": {
+                  "type": "string",
+                  "description": "Contact of the enterprise."
+                },
+                "email": {
+                  "type": "string",
+                  "description": "EmailID of the enterprise."
+                },
+                "state": {
+                  "$ref": "#/definitions/commonState",
+                  "description": "State of the enterprise."
+                },
+                "tenantIdentifier": {
+                  "type": "string",
+                  "description": "Unique Identifier of the tenant in which the current enterprise belongs to."
+                },
+                "origin": {
+                  "$ref": "#/definitions/commonOrigin",
+                  "description": "User origin details: like created time, update time etc"
+                },
+                "version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version stores the DB version of the enterprise."
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags stores the key value pairs of the enterprise."
+                }
+              },
+              "description": "The Create/Update payload of the enterprise.",
+              "title": "Enterprise create/update data payload",
+              "required": [
+                "name",
+                "address",
+                "contact",
+                "email",
+                "tenantIdentifier"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      }
+    },
+    "/v1/enterprises/{name}": {
+      "get": {
+        "summary": "GetByName Enterprise",
+        "operationId": "EnterpriseService_GetByName",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/enterpriseEnterprise"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Unique name of the Enterprise",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "EnterpriseService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name in the address"
+        },
+        "street": {
+          "type": "string",
+          "description": "Address Line 1 for Street, buiding/flat details etc"
+        },
+        "area": {
+          "type": "string",
+          "description": "Address Line 2 for village/sector"
+        },
+        "locality": {
+          "type": "string",
+          "description": "Nearest locality of the address within the given pincode."
+        },
+        "city": {
+          "type": "string",
+          "description": "City"
+        },
+        "state": {
+          "type": "string",
+          "description": "State or Province"
+        },
+        "pincode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 94101,
+          "description": "ZIP or Postal Code"
+        }
+      },
+      "description": "An address associated with an enterprise",
+      "title": "Address object"
+    },
+    "commonCursor": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Offset"
+        },
+        "pageNum": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Number"
+        },
+        "limit": {
+          "type": "number",
+          "format": "int32",
+          "description": "Defines the page size/limit"
+        },
+        "totalPages": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of pages to be fetched."
+        },
+        "totalRecords": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of records."
+        }
+      },
+      "description": "Cursor helps in filtering the various list response.",
+      "title": "Cursor is used as filter in list operation."
+    },
+    "commonKeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Key of the attribute."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the attribute assoiacteed wwith the key."
+        }
+      },
+      "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+      "title": "KeyValue is used to store the key value information.",
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commonOrder": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string",
+          "description": "Sort by attributes used for sorting based on what field of the enterprise."
+        },
+        "order": {
+          "$ref": "#/definitions/commonSortOrder",
+          "description": "Sort order can be ASCENDING/DESCENDING"
+        }
+      }
+    },
+    "commonOrigin": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "object",
+          "format": "date-time",
+          "description": "User data: Created time"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User data: Created By"
+        },
+        "updatedAt": {
+          "type": "object",
+          "format": "date-time",
+          "description": "The time when the record was last updated."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "User data: Updated By"
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "Origin object"
+    },
+    "commonSortOrder": {
+      "type": "string",
+      "enum": [
+        "SORT_ORDER_UNSPECIFIED",
+        "SORT_ORDER_ASCENDING",
+        "SORT_ORDER_DESCENDING"
+      ],
+      "default": "SORT_ORDER_UNSPECIFIED"
+    },
+    "commonState": {
+      "type": "string",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "STATE_CREATED",
+        "STATE_ACTIVE",
+        "STATE_SUSPENDED",
+        "STATE_CLOSED"
+      ],
+      "default": "STATE_UNSPECIFIED",
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+    },
+    "enterpriseEnterprise": {
+      "type": "object",
+      "example": {
+        "name": "dummy",
+        "email": "admin@admin.com",
+        "contact": "+91 1234567890"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the enterprise."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the enterprise."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the enterprise."
+        },
+        "address": {
+          "$ref": "#/definitions/commonAddress",
+          "description": "Address of the enterprise."
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact of the enterprise."
+        },
+        "email": {
+          "type": "string",
+          "description": "EmailID of the enterprise."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State of the enterprise."
+        },
+        "tenantIdentifier": {
+          "type": "string",
+          "description": "Unique Identifier of the tenant in which the current enterprise belongs to."
+        },
+        "origin": {
+          "$ref": "#/definitions/commonOrigin",
+          "description": "User origin details: like created time, update time etc"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the enterprise."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the enterprise."
+        }
+      },
+      "description": "The Create/Update payload of the enterprise.",
+      "title": "Enterprise create/update data payload",
+      "required": [
+        "name",
+        "address",
+        "contact",
+        "email",
+        "tenantIdentifier"
+      ]
+    },
+    "enterpriseEnterpriseFilter": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State, filters based on the enterprise state"
+        },
+        "order": {
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        }
+      },
+      "description": "EnterpriseFilter request paylod",
+      "title": "EnterpriseFilter payload detail"
+    },
+    "enterpriseEnterpriseListResponse": {
+      "type": "object",
+      "properties": {
+        "enterprises": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/enterpriseEnterprise"
+          },
+          "description": "List of enterprises."
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "Enterprise list response details.",
+      "title": "Enterprise list response details"
+    },
+    "enterpriseEnterpriseResponse": {
+      "type": "object",
+      "example": {
+        "status": "Enterprise created Successfully."
+      },
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Status message of the operation."
+        }
+      },
+      "description": "Enterprise create/update response details.",
+      "title": "Enterprise create/update response details"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
           }
         }
       }
     }
   }
+}
