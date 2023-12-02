@@ -1,0 +1,754 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "api/dmsg/enterprise/center.proto",
+      "version": "version not set"
+    },
+    "tags": [
+      {
+        "name": "CenterService"
+      }
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/v1/centers": {
+        "get": {
+          "summary": "List all Centers",
+          "operationId": "CenterService_List",
+          "responses": {
+            "200": {
+              "description": "Successful response of enterprise list",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCentersListResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCentersListResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "This center id is used while fetching the associated centers list.",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "filters",
+              "description": "Center filter",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "cursor",
+              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        },
+        "post": {
+          "summary": "Create Center",
+          "operationId": "CenterService_Create",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "description": "The Create/Update payload of the Center.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        }
+      },
+      "/v1/centers/{id}": {
+        "get": {
+          "summary": "GetById Center",
+          "operationId": "CenterService_GetById",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Center",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Center",
+          "operationId": "CenterService_Delete",
+          "responses": {
+            "200": {
+              "description": "Successful deleted the enterprise resource",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "400": {
+              "description": "Invalid data, Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "404": {
+              "description": "Center Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Center",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        },
+        "put": {
+          "summary": "Update Center",
+          "operationId": "CenterService_Update",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenterResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique identifier for the Center.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "dummy",
+                  "email": "test-center@admin.com",
+                  "contact": "+91 1234567890"
+                },
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the Center."
+                  },
+                  "enterpriseId": {
+                    "type": "string",
+                    "description": "Unique identifier for the Enterprise in which center belongs to."
+                  },
+                  "type": {
+                    "$ref": "#/definitions/enterpriseCenterType",
+                    "description": "Tpe of the Center, could be FARM/DISTRIBUTOR etc."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description for the Center."
+                  },
+                  "address": {
+                    "$ref": "#/definitions/commonAddress",
+                    "description": "Address of the Center."
+                  },
+                  "contactNumber": {
+                    "type": "string",
+                    "description": "Contact of the Center."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "EmailID of the Center."
+                  },
+                  "state": {
+                    "$ref": "#/definitions/commonState",
+                    "description": "State of the Center."
+                  },
+                  "origin": {
+                    "type": "object",
+                    "$ref": "#/definitions/commonOrigin",
+                    "description": "User origin details: like created time, update time etc"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Version stores the DB version of the center."
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Tags stores the key value pairs of the enterprise."
+                  }
+                },
+                "description": "The Create/Update payload of the Center.",
+                "title": "Center create/update data payload",
+                "required": [
+                  "name",
+                  "address",
+                  "contact",
+                  "email"
+                ]
+              }
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        }
+      },
+      "/v1/centers/{id}/associatedcenters": {
+        "get": {
+          "summary": "List associated Center with the given centerid",
+          "operationId": "CenterService_ListAssociatedCenters",
+          "responses": {
+            "200": {
+              "description": "Successful response of enterprise list",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCentersListResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCentersListResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "This center id is used while fetching the associated centers list.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "filters",
+              "description": "Center filter",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "cursor",
+              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        }
+      },
+      "/v1/centers/{name}": {
+        "get": {
+          "summary": "GetByName Center",
+          "operationId": "CenterService_GetByName",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseCenter"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "name",
+              "description": "Unique name of the Center within the given enterprise",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "CenterService"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "commonAddress": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name in the address"
+          },
+          "street": {
+            "type": "string",
+            "description": "Address Line 1 for Street, buiding/flat details etc"
+          },
+          "area": {
+            "type": "string",
+            "description": "Address Line 2 for village/sector"
+          },
+          "locality": {
+            "type": "string",
+            "description": "Nearest locality of the address within the given pincode."
+          },
+          "city": {
+            "type": "string",
+            "description": "City"
+          },
+          "state": {
+            "type": "string",
+            "description": "State or Province"
+          },
+          "pincode": {
+            "type": "integer",
+            "format": "int32",
+            "example": 94101,
+            "description": "ZIP or Postal Code"
+          }
+        },
+        "description": "An address associated with an enterprise",
+        "title": "Address object"
+      },
+      "commonCursor": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Offset"
+          },
+          "pageNum": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Number"
+          },
+          "limit": {
+            "type": "number",
+            "format": "int32",
+            "description": "Defines the page size/limit"
+          },
+          "totalPages": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of pages to be fetched."
+          },
+          "totalRecords": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of records."
+          }
+        },
+        "description": "Cursor helps in filtering the various list response.",
+        "title": "Cursor is used as filter in list operation."
+      },
+      "commonKeyValue": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Key of the attribute."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the attribute assoiacteed wwith the key."
+          }
+        },
+        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+        "title": "KeyValue is used to store the key value information.",
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "commonOrder": {
+        "type": "object",
+        "properties": {
+          "orderBy": {
+            "type": "string",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise."
+          },
+          "order": {
+            "$ref": "#/definitions/commonSortOrder",
+            "description": "Sort order can be ASCENDING/DESCENDING"
+          }
+        }
+      },
+      "commonOrigin": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "object",
+            "format": "date-time",
+            "description": "User data: Created time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "User data: Created By"
+          },
+          "updatedAt": {
+            "type": "object",
+            "format": "date-time",
+            "description": "The time when the record was last updated."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "User data: Updated By"
+          }
+        },
+        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+        "title": "Origin object"
+      },
+      "commonSortOrder": {
+        "type": "string",
+        "enum": [
+          "SORT_ORDER_UNSPECIFIED",
+          "SORT_ORDER_ASCENDING",
+          "SORT_ORDER_DESCENDING"
+        ],
+        "default": "SORT_ORDER_UNSPECIFIED"
+      },
+      "commonState": {
+        "type": "string",
+        "enum": [
+          "STATE_UNSPECIFIED",
+          "STATE_CREATED",
+          "STATE_ACTIVE",
+          "STATE_SUSPENDED",
+          "STATE_CLOSED"
+        ],
+        "default": "STATE_UNSPECIFIED",
+        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      },
+      "enterpriseCenter": {
+        "type": "object",
+        "example": {
+          "name": "dummy",
+          "email": "test-center@admin.com",
+          "contact": "+91 1234567890"
+        },
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Center."
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the Center."
+          },
+          "enterpriseId": {
+            "type": "string",
+            "description": "Unique identifier for the Enterprise in which center belongs to."
+          },
+          "type": {
+            "$ref": "#/definitions/enterpriseCenterType",
+            "description": "Tpe of the Center, could be FARM/DISTRIBUTOR etc."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description for the Center."
+          },
+          "address": {
+            "$ref": "#/definitions/commonAddress",
+            "description": "Address of the Center."
+          },
+          "contactNumber": {
+            "type": "string",
+            "description": "Contact of the Center."
+          },
+          "email": {
+            "type": "string",
+            "description": "EmailID of the Center."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State of the Center."
+          },
+          "origin": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrigin",
+            "description": "User origin details: like created time, update time etc"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Version stores the DB version of the center."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags stores the key value pairs of the enterprise."
+          }
+        },
+        "description": "The Create/Update payload of the Center.",
+        "title": "Center create/update data payload",
+        "required": [
+          "name",
+          "address",
+          "contact",
+          "email"
+        ]
+      },
+      "enterpriseCenterFilter": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/commonKeyValue"
+            },
+            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State, filters based on the Center state"
+          },
+          "type": {
+            "$ref": "#/definitions/enterpriseCenterType",
+            "description": "State, filters based on the Center state"
+          },
+          "order": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrder",
+            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+          }
+        },
+        "description": "CenterFilter request paylod used list the centers with the various filters like State, name etc.",
+        "title": "CenterFilter payload detail"
+      },
+      "enterpriseCenterResponse": {
+        "type": "object",
+        "example": {
+          "status": "Center Test created Successfully."
+        },
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status message of the operation."
+          }
+        },
+        "description": "Center create/update response details.",
+        "title": "Center create/update response details"
+      },
+      "enterpriseCenterType": {
+        "type": "string",
+        "enum": [
+          "CENTER_TYPE_UNSPECIFIED",
+          "CENTER_TYPE_FARM",
+          "CENTER_TYPE_DISTRIBUTOR"
+        ],
+        "default": "CENTER_TYPE_UNSPECIFIED"
+      },
+      "enterpriseCentersListResponse": {
+        "type": "object",
+        "properties": {
+          "centers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/enterpriseCenter"
+            },
+            "description": "List of centers."
+          },
+          "cursor": {
+            "type": "object",
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          }
+        },
+        "description": "Center list response details.",
+        "title": "Center list response details"
+      },
+      "protobufAny": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {}
+      },
+      "rpcStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/protobufAny"
+            }
+          }
+        }
+      }
+    }
+  }
+  

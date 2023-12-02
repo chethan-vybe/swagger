@@ -1,0 +1,1254 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "api/dmsg/enterprise/product.proto",
+      "version": "version not set"
+    },
+    "tags": [
+      {
+        "name": "ProductService"
+      }
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/v1/products": {
+        "get": {
+          "summary": "List all Products",
+          "operationId": "ProductService_List",
+          "responses": {
+            "200": {
+              "description": "Successful response of product list",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductsListResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductsListResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "filters.state",
+              "description": "State, filters based on the Product state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "STATE_UNSPECIFIED",
+                "STATE_CREATED",
+                "STATE_ACTIVE",
+                "STATE_SUSPENDED",
+                "STATE_CLOSED"
+              ],
+              "default": "STATE_UNSPECIFIED"
+            },
+            {
+              "name": "filters.type",
+              "description": "Type, filters based on the Product type",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "PRODUCT_TYPE_UNSPECIFIED",
+                "PRODUCT_TYPE_DAIRY"
+              ],
+              "default": "PRODUCT_TYPE_UNSPECIFIED"
+            },
+            {
+              "name": "filters.category",
+              "description": "Category, filters based on the Product Category",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "PRODUCT_CATEGORY_UNSPECIFIED",
+                "PRODUCT_CATEGORY_DAIRY",
+                "PRODUCT_CATEGORY_VEGETABLES",
+                "PRODUCT_CATEGORY_FRUITS",
+                "PRODUCT_CATEGORY_BRANDED_FOOD"
+              ],
+              "default": "PRODUCT_CATEGORY_UNSPECIFIED"
+            },
+            {
+              "name": "cursor.offset",
+              "description": "Page Offset",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.pageNum",
+              "description": "Page Number",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.limit",
+              "description": "Defines the page size/limit",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.totalPages",
+              "description": "Total number of pages to be fetched.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
+            },
+            {
+              "name": "cursor.totalRecords",
+              "description": "Total number of records.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        },
+        "post": {
+          "summary": "Create Product",
+          "operationId": "ProductService_Create",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "description": "The Create/Update payload of the Product.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/enterpriseProduct"
+              }
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      },
+      "/v1/products/{id}": {
+        "get": {
+          "summary": "GetById Product",
+          "operationId": "ProductService_GetById",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Product",
+          "operationId": "ProductService_Delete",
+          "responses": {
+            "200": {
+              "description": "Successful deleted the Product resource",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Invalid data, Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Product Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        },
+        "put": {
+          "summary": "Update Product",
+          "operationId": "ProductService_Update",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique identifier for the Product.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "dummy",
+                  "discountId": "XXXXXXX"
+                },
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the Product."
+                  },
+                  "enterpriseId": {
+                    "type": "string",
+                    "description": "Unique identifier for the Enterprise in which product belongs to."
+                  },
+                  "type": {
+                    "$ref": "#/definitions/enterpriseProductType",
+                    "description": "Type of the Product."
+                  },
+                  "category": {
+                    "$ref": "#/definitions/enterpriseProductCategory",
+                    "description": "Category of the Product."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description for the Product."
+                  },
+                  "discountId": {
+                    "type": "string",
+                    "description": "Discount ID of the Product."
+                  },
+                  "state": {
+                    "$ref": "#/definitions/commonState",
+                    "description": "State of the Product."
+                  },
+                  "assets": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string",
+                      "format": "byte"
+                    },
+                    "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+                  },
+                  "origin": {
+                    "$ref": "#/definitions/commonOrigin",
+                    "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Tags stores the key value pairs of the enterprise."
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Version stores the DB version of the product."
+                  }
+                },
+                "description": "The Create/Update payload of the Product.",
+                "title": "Product create/update data payload",
+                "required": [
+                  "name",
+                  "address",
+                  "contact",
+                  "email"
+                ]
+              }
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      },
+      "/v1/products/{name}": {
+        "get": {
+          "summary": "GetByName Product",
+          "operationId": "ProductService_GetByName",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductDetail"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "name",
+              "description": "Unique name of the Product within the given enterprise",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      },
+      "/v1/products/{productId}/skus": {
+        "get": {
+          "summary": "List sku by ProductId",
+          "operationId": "ProductService_ListSKUByProductId",
+          "responses": {
+            "200": {
+              "description": "Successful response of sku list by productId",
+              "schema": {
+                "$ref": "#/definitions/enterpriseSKUListRequest"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseSKUListRequest"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "productId",
+              "description": "Unique Identifier of the Product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "cursor.offset",
+              "description": "Page Offset",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.pageNum",
+              "description": "Page Number",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.limit",
+              "description": "Defines the page size/limit",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.totalPages",
+              "description": "Total number of pages to be fetched.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
+            },
+            {
+              "name": "cursor.totalRecords",
+              "description": "Total number of records.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        },
+        "put": {
+          "summary": "Create Product SKU",
+          "operationId": "ProductService_CreateSKU",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "productId",
+              "description": "Unique Identifier for the Prodducct in which SKU is associated with.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "productId": "{productId}",
+                  "sku": "{sku}"
+                },
+                "properties": {
+                  "sku": {
+                    "$ref": "#/definitions/enterpriseSKU",
+                    "description": "SKU(Sellable Unit) of the Product."
+                  }
+                },
+                "description": "ProductSKU is the identenfier place holder for product and SKU",
+                "title": "ProductSKU is the identenfier place holder for product and SKU"
+              }
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      },
+      "/v1/products/{productId}/skus/{id}": {
+        "get": {
+          "summary": "Get SKU ById Product",
+          "operationId": "ProductService_GetSKUById",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseSKU"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseSKU"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseSKU"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "productId",
+              "description": "Unique Identifier for the Prodducct in which SKU is associated with.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique Identifier for the SKU of a product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        },
+        "delete": {
+          "summary": "Delete SKU Product",
+          "operationId": "ProductService_DeleteSKU",
+          "responses": {
+            "200": {
+              "description": "Successful deleted the SKU resource",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Invalid data, Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Product Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "productId",
+              "description": "Unique Identifier for the Prodducct in which SKU is associated with.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique Identifier for the SKU of a product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      },
+      "/v1/products/{productId}/skus/{sku.id}": {
+        "put": {
+          "summary": "Update Product SKU",
+          "operationId": "ProductService_UpdateSKU",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/enterpriseProductResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "productId",
+              "description": "Unique Identifier for the Prodducct in which SKU is associated with.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "sku.id",
+              "description": "Unique Identifier for the SKU of a product",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "productId": "{productId}",
+                  "sku": "{sku}"
+                },
+                "properties": {
+                  "sku": {
+                    "type": "object",
+                    "example": {
+                      "name": "milk 500 ml"
+                    },
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name for the SKU of a product"
+                      },
+                      "enterpriseId": {
+                        "type": "string",
+                        "description": "Unique identifier for the Enterprise in which sku belongs to."
+                      },
+                      "productId": {
+                        "type": "string",
+                        "description": "Unique Identifier for the Product in which SKU is associated with."
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Description for the SKU of a product"
+                      },
+                      "basePrice": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Base price  for the SKU of a product"
+                      },
+                      "canSubscribe": {
+                        "type": "boolean",
+                        "description": "Can Subscribe tells whether the SKU can be subscribed for the SKU"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "Unit of an SKU of a product"
+                      },
+                      "discountId": {
+                        "type": "string",
+                        "description": "Applicable Discount Id for the given SKU "
+                      },
+                      "assets": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string",
+                          "format": "byte"
+                        },
+                        "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+                      },
+                      "origin": {
+                        "$ref": "#/definitions/commonOrigin",
+                        "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
+                      },
+                      "tags": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        },
+                        "description": "Tags stores the key value pairs of the enterprise."
+                      },
+                      "version": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Version stores the DB version of the product."
+                      }
+                    },
+                    "description": "SKU carries various details like .",
+                    "title": "SKU is the sellable unit of the product"
+                  }
+                },
+                "description": "ProductSKU is the identenfier place holder for product and SKU",
+                "title": "ProductSKU is the identenfier place holder for product and SKU"
+              }
+            }
+          ],
+          "tags": [
+            "ProductService"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "commonCursor": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Offset"
+          },
+          "pageNum": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Number"
+          },
+          "limit": {
+            "type": "number",
+            "format": "int32",
+            "description": "Defines the page size/limit"
+          },
+          "totalPages": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of pages to be fetched."
+          },
+          "totalRecords": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of records."
+          }
+        },
+        "description": "Cursor helps in filtering the various list response.",
+        "title": "Cursor is used as filter in list operation."
+      },
+      "commonKeyValue": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Key of the attribute."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the attribute assoiacteed wwith the key."
+          }
+        },
+        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+        "title": "KeyValue is used to store the key value information.",
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "commonOrder": {
+        "type": "object",
+        "properties": {
+          "orderBy": {
+            "type": "string",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise."
+          },
+          "order": {
+            "$ref": "#/definitions/commonSortOrder",
+            "description": "Sort order can be ASCENDING/DESCENDING"
+          }
+        }
+      },
+      "commonOrigin": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "object",
+            "format": "date-time",
+            "description": "User data: Created time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "User data: Created By"
+          },
+          "updatedAt": {
+            "type": "object",
+            "format": "date-time",
+            "description": "The time when the record was last updated."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "User data: Updated By"
+          }
+        },
+        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+        "title": "Origin object"
+      },
+      "commonSortOrder": {
+        "type": "string",
+        "enum": [
+          "SORT_ORDER_UNSPECIFIED",
+          "SORT_ORDER_ASCENDING",
+          "SORT_ORDER_DESCENDING"
+        ],
+        "default": "SORT_ORDER_UNSPECIFIED"
+      },
+      "commonState": {
+        "type": "string",
+        "enum": [
+          "STATE_UNSPECIFIED",
+          "STATE_CREATED",
+          "STATE_ACTIVE",
+          "STATE_SUSPENDED",
+          "STATE_CLOSED"
+        ],
+        "default": "STATE_UNSPECIFIED",
+        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      },
+      "enterpriseProduct": {
+        "type": "object",
+        "example": {
+          "name": "dummy",
+          "discountId": "XXXXXXX"
+        },
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the Product."
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the Product."
+          },
+          "enterpriseId": {
+            "type": "string",
+            "description": "Unique identifier for the Enterprise in which product belongs to."
+          },
+          "type": {
+            "$ref": "#/definitions/enterpriseProductType",
+            "description": "Type of the Product."
+          },
+          "category": {
+            "$ref": "#/definitions/enterpriseProductCategory",
+            "description": "Category of the Product."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description for the Product."
+          },
+          "discountId": {
+            "type": "string",
+            "description": "Discount ID of the Product."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State of the Product."
+          },
+          "assets": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "format": "byte"
+            },
+            "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+          },
+          "origin": {
+            "$ref": "#/definitions/commonOrigin",
+            "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags stores the key value pairs of the enterprise."
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Version stores the DB version of the product."
+          }
+        },
+        "description": "The Create/Update payload of the Product.",
+        "title": "Product create/update data payload",
+        "required": [
+          "name",
+          "address",
+          "contact",
+          "email"
+        ]
+      },
+      "enterpriseProductCategory": {
+        "type": "string",
+        "enum": [
+          "PRODUCT_CATEGORY_UNSPECIFIED",
+          "PRODUCT_CATEGORY_DAIRY",
+          "PRODUCT_CATEGORY_VEGETABLES",
+          "PRODUCT_CATEGORY_FRUITS",
+          "PRODUCT_CATEGORY_BRANDED_FOOD"
+        ],
+        "default": "PRODUCT_CATEGORY_UNSPECIFIED"
+      },
+      "enterpriseProductDetail": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "$ref": "#/definitions/enterpriseProduct",
+            "description": "Product meta data like id, name"
+          },
+          "skus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/enterpriseSKU"
+            },
+            "description": "List of available SKUs(Sellable Unit) of the Product."
+          }
+        }
+      },
+      "enterpriseProductFilter": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/commonKeyValue"
+            },
+            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State, filters based on the Product state"
+          },
+          "type": {
+            "$ref": "#/definitions/enterpriseProductType",
+            "description": "Type, filters based on the Product type"
+          },
+          "category": {
+            "$ref": "#/definitions/enterpriseProductCategory",
+            "description": "Category, filters based on the Product Category"
+          },
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/commonOrder"
+            },
+            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+          }
+        },
+        "description": "Product request paylod",
+        "title": "ProductFilter payload detail"
+      },
+      "enterpriseProductResponse": {
+        "type": "object",
+        "example": {
+          "status": "Product Test created Successfully."
+        },
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status message of the operation."
+          }
+        },
+        "description": "Product create/update response details.",
+        "title": "Product create/update response details"
+      },
+      "enterpriseProductType": {
+        "type": "string",
+        "enum": [
+          "PRODUCT_TYPE_UNSPECIFIED",
+          "PRODUCT_TYPE_DAIRY"
+        ],
+        "default": "PRODUCT_TYPE_UNSPECIFIED",
+        "title": "TODO: add atype of product"
+      },
+      "enterpriseProductsListResponse": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/enterpriseProduct"
+            },
+            "description": "List of products."
+          },
+          "cursor": {
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          }
+        },
+        "description": "Product list response details.",
+        "title": "Product list response details"
+      },
+      "enterpriseSKU": {
+        "type": "object",
+        "example": {
+          "name": "milk 500 ml"
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique Identifier for the SKU of a product"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name for the SKU of a product"
+          },
+          "enterpriseId": {
+            "type": "string",
+            "description": "Unique identifier for the Enterprise in which sku belongs to."
+          },
+          "productId": {
+            "type": "string",
+            "description": "Unique Identifier for the Product in which SKU is associated with."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description for the SKU of a product"
+          },
+          "basePrice": {
+            "type": "number",
+            "format": "float",
+            "description": "Base price  for the SKU of a product"
+          },
+          "canSubscribe": {
+            "type": "boolean",
+            "description": "Can Subscribe tells whether the SKU can be subscribed for the SKU"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of an SKU of a product"
+          },
+          "discountId": {
+            "type": "string",
+            "description": "Applicable Discount Id for the given SKU "
+          },
+          "assets": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "format": "byte"
+            },
+            "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+          },
+          "origin": {
+            "$ref": "#/definitions/commonOrigin",
+            "description": "Usser origin details like ccreated time, upadted time, create user and updated user."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags stores the key value pairs of the enterprise."
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Version stores the DB version of the product."
+          }
+        },
+        "description": "SKU carries various details like .",
+        "title": "SKU is the sellable unit of the product"
+      },
+      "enterpriseSKUListRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Unique Identifier of the Product"
+          },
+          "cursor": {
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          },
+          "selectFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Fields to select: id, name, description"
+          }
+        },
+        "description": "SKUListRequest request paylod used for listing SKu By product Id.",
+        "title": "SKUListRequest payload detail",
+        "required": [
+          "productId",
+          "filters"
+        ]
+      },
+      "enterpriseSKUListResponse": {
+        "type": "object",
+        "properties": {
+          "skus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/enterpriseSKU"
+            },
+            "description": "List of SKUs."
+          },
+          "cursor": {
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          }
+        },
+        "description": "SKUListResponse list response details.",
+        "title": "SKUListResponse list response details"
+      },
+      "protobufAny": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {}
+      },
+      "rpcStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/protobufAny"
+            }
+          }
+        }
+      }
+    }
+  }
+  
