@@ -524,7 +524,7 @@
       "type": "object",
       "properties": {
         "createdAt": {
-          "type": "object",
+          "type": "string",
           "format": "date-time",
           "description": "User data: Created time"
         },
@@ -533,7 +533,7 @@
           "description": "User data: Created By"
         },
         "updatedAt": {
-          "type": "object",
+          "type": "string",
           "format": "date-time",
           "description": "The time when the record was last updated."
         },
