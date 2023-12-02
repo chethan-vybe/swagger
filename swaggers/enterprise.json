@@ -673,7 +673,11 @@
         }
       },
       "description": "Enterprise list response details.",
-      "title": "Enterprise list response details"
+      "title": "Enterprise list response details",
+      "required": [
+        "enterprises",
+        "cursor"
+      ]
     },
     "enterpriseEnterpriseResponse": {
       "type": "object",
