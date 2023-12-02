@@ -24,13 +24,13 @@
           "200": {
             "description": "Successful response of enterprise list",
             "schema": {
-              "$ref": ".enterprise.EnterpriseList"
+              "$ref": "#/definitions/enterpriseEnterpriseListResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".enterprise.EnterpriseList"
+              "$ref": "#/definitions/enterpriseEnterpriseListResponse"
             }
           },
           "default": {
