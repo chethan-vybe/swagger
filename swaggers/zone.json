@@ -1,0 +1,650 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "api/dmsg/inventory/zone.proto",
+      "version": "version not set"
+    },
+    "tags": [
+      {
+        "name": "ZoneService"
+      }
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/v1/zones": {
+        "get": {
+          "summary": "List Zone",
+          "operationId": "ZoneService_List",
+          "responses": {
+            "200": {
+              "description": "Successful response of zone list",
+              "schema": {
+                "$ref": ".zone.ZoneList"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".zone.ZoneList"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "filters",
+              "description": "Zone filter",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "cursor",
+              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        },
+        "post": {
+          "summary": "Create Zone",
+          "operationId": "ZoneService_Create",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "description": "The Create/Update payload of the Zone.",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/inventoryZone"
+              }
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        }
+      },
+      "/v1/zones/{id}": {
+        "get": {
+          "summary": "GetById Zone",
+          "operationId": "ZoneService_GetById",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Zone",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Zone",
+          "operationId": "ZoneService_Delete",
+          "responses": {
+            "200": {
+              "description": "Successful deleted the zone resource",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "400": {
+              "description": "Invalid data, Bad Request",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "404": {
+              "description": "Zone Not Found",
+              "schema": {
+                "$ref": ".zone.Zone"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Zone",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        },
+        "put": {
+          "summary": "Update Zone",
+          "operationId": "ZoneService_Update",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": ".zone.ZoneResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique identifier for the zone.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "dummy",
+                  "enterpriseId": "{enterpriseId}",
+                  "centerId": "{centerId}"
+                },
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the zone."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description for the zone."
+                  },
+                  "enterpriseId": {
+                    "type": "string",
+                    "description": "Unique identifier for the enterprise in which zone belongs to."
+                  },
+                  "centerId": {
+                    "type": "string",
+                    "description": "Unique identifier for the center in which zone belongs to."
+                  },
+                  "pincodes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "$ref": "#/definitions/inventoryPincodeDetails"
+                    },
+                    "description": "List of Pincodes in which zone associated with."
+                  },
+                  "state": {
+                    "$ref": "#/definitions/commonState",
+                    "description": "State of the zone."
+                  },
+                  "origin": {
+                    "type": "object",
+                    "$ref": "#/definitions/commonOrigin",
+                    "description": "User origin details: like created time, update time etc"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Version stores the DB version of the zone."
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Tags stores the key value pairs of the zone."
+                  }
+                },
+                "description": "The Create/Update payload of the Zone.",
+                "title": "Zone create/update data payload",
+                "required": [
+                  "name",
+                  "enterpriseId",
+                  "centerId"
+                ]
+              }
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        }
+      },
+      "/v1/zones/{id}/{pincode}": {
+        "get": {
+          "summary": "List localities by pincode",
+          "operationId": "ZoneService_ListLocalityByZone",
+          "responses": {
+            "200": {
+              "description": "Successful response of zone list",
+              "schema": {
+                "$ref": ".zone.PincodeDetails"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".zone.PincodeDetails"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Zone",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "pincode",
+              "description": "Pincode of the Zone",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ZoneService"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "commonCursor": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Offset"
+          },
+          "pageNum": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Number"
+          },
+          "limit": {
+            "type": "number",
+            "format": "int32",
+            "description": "Defines the page size/limit"
+          },
+          "totalPages": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of pages to be fetched."
+          },
+          "totalRecords": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of records."
+          }
+        },
+        "description": "Cursor helps in filtering the various list response.",
+        "title": "Cursor is used as filter in list operation."
+      },
+      "commonKeyValue": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Key of the attribute."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the attribute assoiacteed wwith the key."
+          }
+        },
+        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+        "title": "KeyValue is used to store the key value information.",
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "commonOrder": {
+        "type": "object",
+        "properties": {
+          "orderBy": {
+            "type": "string",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise."
+          },
+          "order": {
+            "$ref": "#/definitions/commonSortOrder",
+            "description": "Sort order can be ASCENDING/DESCENDING"
+          }
+        }
+      },
+      "commonOrigin": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "User data: Created time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "User data: Created By"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time when the record was last updated."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "User data: Updated By"
+          }
+        },
+        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+        "title": "Origin object"
+      },
+      "commonSortOrder": {
+        "type": "string",
+        "enum": [
+          "SORT_ORDER_UNSPECIFIED",
+          "SORT_ORDER_ASCENDING",
+          "SORT_ORDER_DESCENDING"
+        ],
+        "default": "SORT_ORDER_UNSPECIFIED"
+      },
+      "commonState": {
+        "type": "string",
+        "enum": [
+          "STATE_UNSPECIFIED",
+          "STATE_CREATED",
+          "STATE_ACTIVE",
+          "STATE_SUSPENDED",
+          "STATE_CLOSED"
+        ],
+        "default": "STATE_UNSPECIFIED",
+        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      },
+      "inventoryPincodeDetails": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Pincode of the zone"
+          },
+          "details": {
+            "type": "string",
+            "description": "Details of the Pincode."
+          },
+          "localities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of localities associated with particular pincode."
+          }
+        },
+        "description": "The PincodeDetails details",
+        "title": "PincodeDetails details",
+        "required": [
+          "code",
+          "localities"
+        ]
+      },
+      "inventoryZone": {
+        "type": "object",
+        "example": {
+          "name": "dummy",
+          "enterpriseId": "{enterpriseId}",
+          "centerId": "{centerId}"
+        },
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the zone."
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the zone."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description for the zone."
+          },
+          "enterpriseId": {
+            "type": "string",
+            "description": "Unique identifier for the enterprise in which zone belongs to."
+          },
+          "centerId": {
+            "type": "string",
+            "description": "Unique identifier for the center in which zone belongs to."
+          },
+          "pincodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/inventoryPincodeDetails"
+            },
+            "description": "List of Pincodes in which zone associated with."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State of the zone."
+          },
+          "origin": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrigin",
+            "description": "User origin details: like created time, update time etc"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Version stores the DB version of the zone."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags stores the key value pairs of the zone."
+          }
+        },
+        "description": "The Create/Update payload of the Zone.",
+        "title": "Zone create/update data payload",
+        "required": [
+          "name",
+          "enterpriseId",
+          "centerId"
+        ]
+      },
+      "inventoryZoneFilter": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/commonKeyValue"
+            },
+            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State, filters based on the zone state"
+          },
+          "order": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrder",
+            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+          }
+        },
+        "description": "ZoneFilter request paylod",
+        "title": "ZoneFilter payload detail"
+      },
+      "inventoryZoneListResponse": {
+        "type": "object",
+        "properties": {
+          "zones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/inventoryZone"
+            },
+            "description": "List of zones."
+          },
+          "cursor": {
+            "type": "object",
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          }
+        },
+        "description": "Zone list response details.",
+        "title": "Zone list response details"
+      },
+      "inventoryZoneResponse": {
+        "type": "object",
+        "example": {
+          "status": "Zone created Successfully."
+        },
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status message of the operation."
+          }
+        },
+        "description": "Zone create/update response details.",
+        "title": "Zone create/update response details"
+      },
+      "protobufAny": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {}
+      },
+      "rpcStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/protobufAny"
+            }
+          }
+        }
+      }
+    }
+  }
