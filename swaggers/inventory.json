@@ -24,13 +24,13 @@
           "200": {
             "description": "Successful response of inventory list",
             "schema": {
-              "$ref": ".inventory.InventoryListResponse"
+              "$ref": "#/definitions/centerresourceInventoryListResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".inventory.InventoryListResponse"
+              "$ref": "#/definitions/centerresourceInventoryListResponse"
             }
           },
           "default": {
@@ -184,19 +184,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "default": {
@@ -244,19 +244,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "default": {
@@ -379,19 +379,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": ".inventory.Inventory"
+              "$ref": "#/definitions/centerresourceInventory"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".inventory.Inventory"
+              "$ref": "#/definitions/centerresourceInventory"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": ".inventory.Inventory"
+              "$ref": "#/definitions/centerresourceInventory"
             }
           },
           "default": {
@@ -428,19 +428,19 @@
           "200": {
             "description": "Successful deleted the inventory resource",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "400": {
             "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "404": {
             "description": "Inventory Not Found",
             "schema": {
-              "$ref": ".inventory.InventoryResponse"
+              "$ref": "#/definitions/centerresourceInventoryResponse"
             }
           },
           "default": {
