@@ -42,18 +42,98 @@
           },
           "parameters": [
             {
-              "name": "filters",
-              "description": "Subscription filter",
+              "name": "filters.state",
+              "description": "State, filters based on the zone state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.",
               "in": "query",
               "required": false,
-              "type": "object"
+              "type": "string",
+              "enum": [
+                "STATE_UNSPECIFIED",
+                "STATE_CREATED",
+                "STATE_ACTIVE",
+                "STATE_SUSPENDED",
+                "STATE_CLOSED",
+                "STATE_PAUSED",
+                "STATE_PENDING",
+                "STATE_EXPIRED"
+              ],
+              "default": "STATE_UNSPECIFIED"
             },
             {
-              "name": "cursor",
-              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+              "name": "filters.order.orderBy",
+              "description": "Sort by attributes used for sorting based on what field of the enterprise.",
               "in": "query",
               "required": false,
-              "type": "object"
+              "type": "string"
+            },
+            {
+              "name": "filters.order.order",
+              "description": "Sort order can be ASCENDING/DESCENDING",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "enum": [
+                "SORT_ORDER_UNSPECIFIED",
+                "SORT_ORDER_ASCENDING",
+                "SORT_ORDER_DESCENDING"
+              ],
+              "default": "SORT_ORDER_UNSPECIFIED"
+            },
+            {
+              "name": "filters.validFrom",
+              "description": "ValidFrom date of the inventory.",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "filters.validTo",
+              "description": "ValidTill date of the inventory.",
+              "in": "query",
+              "required": false,
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "name": "cursor.offset",
+              "description": "Page Offset",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.pageNum",
+              "description": "Page Number",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.limit",
+              "description": "Defines the page size/limit",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int32"
+            },
+            {
+              "name": "cursor.totalPages",
+              "description": "Total number of pages to be fetched.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
+            },
+            {
+              "name": "cursor.totalRecords",
+              "description": "Total number of records.",
+              "in": "query",
+              "required": false,
+              "type": "number",
+              "format": "int64"
             },
             {
               "name": "selectFields",
@@ -312,7 +392,6 @@
                     "description": "State of the zone."
                   },
                   "origin": {
-                    "type": "object",
                     "$ref": "#/definitions/commonOrigin",
                     "description": "User origin details: like created time, update time etc"
                   },
@@ -443,7 +522,6 @@
                     "description": "State of the zone."
                   },
                   "origin": {
-                    "type": "object",
                     "$ref": "#/definitions/commonOrigin",
                     "description": "User origin details: like created time, update time etc"
                   },
@@ -535,7 +613,6 @@
             "description": "State of the zone."
           },
           "origin": {
-            "type": "object",
             "$ref": "#/definitions/commonOrigin",
             "description": "User origin details: like created time, update time etc"
           },
@@ -593,7 +670,6 @@
             "description": "State, filters based on the zone state"
           },
           "order": {
-            "type": "object",
             "$ref": "#/definitions/commonOrder",
             "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
           },
@@ -623,7 +699,6 @@
             "description": "List of subscriptions."
           },
           "cursor": {
-            "type": "object",
             "$ref": "#/definitions/commonCursor",
             "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
           }
