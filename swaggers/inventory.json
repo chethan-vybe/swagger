@@ -236,6 +236,57 @@
         "tags": [
           "InventoryService"
         ]
+      }
+    },
+    "/v1/inventories/id/{id}/centers/{centerId}": {
+      "get": {
+        "summary": "GetById Inventory",
+        "operationId": "InventoryService_GetById",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the Inventory",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the Center in which Inventory belongs to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
       },
       "put": {
         "summary": "Update Inventory",
@@ -268,6 +319,13 @@
         },
         "parameters": [
           {
+            "name": "id",
+            "description": "Unique identifier of the Inventory.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "centerId",
             "description": "Unique identifier for the Center in which inventory belongs to.",
             "in": "path",
@@ -286,10 +344,6 @@
                 "basePrice": "100"
               },
               "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "Unique identifier of the Inventory."
-                },
                 "description": {
                   "type": "string",
                   "description": "Description for the Inventory."
@@ -372,55 +426,6 @@
       }
     },
     "/v1/inventories/{id}/centers/{centerId}": {
-      "get": {
-        "summary": "GetById Inventory",
-        "operationId": "InventoryService_GetById",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "schema": {
-              "$ref": "#/definitions/centerresourceInventory"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/centerresourceInventory"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/centerresourceInventory"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "description": "Unique Identifier of the Inventory",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "centerId",
-            "description": "Unique Identifier of the Center in which Inventory belongs to.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "InventoryService"
-        ]
-      },
       "delete": {
         "summary": "Delete Inventory",
         "operationId": "InventoryService_Delete",
@@ -750,4 +755,3 @@
     }
   }
 }
-

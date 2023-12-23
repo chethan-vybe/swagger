@@ -1,0 +1,828 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "api/dmsg/centerresource/subscription.proto",
+      "version": "version not set"
+    },
+    "tags": [
+      {
+        "name": "SubscriptionService"
+      }
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/v1/subscriptions": {
+        "get": {
+          "summary": "List Subscription",
+          "operationId": "SubscriptionService_List",
+          "responses": {
+            "200": {
+              "description": "Successful response of zone list",
+              "schema": {
+                "$ref": ".centerresource.SubscriptionList"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": ".centerresource.SubscriptionList"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "filters",
+              "description": "Subscription filter",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "cursor",
+              "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+              "in": "query",
+              "required": false,
+              "type": "object"
+            },
+            {
+              "name": "selectFields",
+              "description": "Fields to select: id, name, description",
+              "in": "query",
+              "required": false,
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "collectionFormat": "multi"
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        },
+        "post": {
+          "summary": "Create Subscription",
+          "operationId": "SubscriptionService_Create",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionCreateRequest"
+              }
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        }
+      },
+      "/v1/subscriptions/user/{userId}/{id}": {
+        "get": {
+          "summary": "GetById Subscription",
+          "operationId": "SubscriptionService_GetById",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "userId",
+              "description": "Unique Identifier of the Subscription",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Subscription",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        },
+        "delete": {
+          "summary": "Delete Subscription",
+          "operationId": "SubscriptionService_Delete",
+          "responses": {
+            "200": {
+              "description": "Successful deleted the zone resource",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "400": {
+              "description": "Invalid data, Bad Request",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "404": {
+              "description": "Subscription Not Found",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscription"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "userId",
+              "description": "Unique Identifier of the Subscription",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique Identifier of the Subscription",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        },
+        "put": {
+          "summary": "Update Subscription",
+          "operationId": "SubscriptionService_Update",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the User in which subscription belongs to.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique identifier for the zone.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "inventoryId": "{inventoryId}",
+                  "enterpriseId": "{enterpriseId}",
+                  "startDate": "{startDate}",
+                  "endDate": "{endDate}"
+                },
+                "properties": {
+                  "inventoryId": {
+                    "type": "string",
+                    "description": "Unique Identifier of the Inventory."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description for the zone."
+                  },
+                  "enterpriseId": {
+                    "type": "string",
+                    "description": "Unique identifier for the enterprise in which zone belongs to."
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date of the inventory."
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date of the inventory."
+                  },
+                  "address": {
+                    "$ref": "#/definitions/commonAddress",
+                    "description": "Address of the User."
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Quantity of the inventory."
+                  },
+                  "subscriptionPrice": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total Subscription amount of the inventory subscribed."
+                  },
+                  "state": {
+                    "$ref": "#/definitions/commonState",
+                    "description": "State of the zone."
+                  },
+                  "origin": {
+                    "type": "object",
+                    "$ref": "#/definitions/commonOrigin",
+                    "description": "User origin details: like created time, update time etc"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Version stores the DB version of the zone."
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Tags stores the key value pairs of the zone."
+                  }
+                },
+                "description": "The Create/Update payload of the Subscription.",
+                "title": "Subscription create/update data payload",
+                "required": [
+                  "inventoryId",
+                  "enterpriseId",
+                  "centerId"
+                ]
+              }
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        }
+      },
+      "/v1/subscriptions/user/{userId}/{id}/renew": {
+        "put": {
+          "summary": "Renew Subscription",
+          "operationId": "SubscriptionService_Renew",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "404": {
+              "description": "Not Found",
+              "schema": {
+                "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              }
+            },
+            "default": {
+              "description": "An unexpected error response.",
+              "schema": {
+                "$ref": "#/definitions/rpcStatus"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "userId",
+              "description": "Unique identifier for the User in which subscription belongs to.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "description": "Unique identifier for the zone.",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "example": {
+                  "inventoryId": "{inventoryId}",
+                  "enterpriseId": "{enterpriseId}",
+                  "startDate": "{startDate}",
+                  "endDate": "{endDate}"
+                },
+                "properties": {
+                  "inventoryId": {
+                    "type": "string",
+                    "description": "Unique Identifier of the Inventory."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description for the zone."
+                  },
+                  "enterpriseId": {
+                    "type": "string",
+                    "description": "Unique identifier for the enterprise in which zone belongs to."
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date of the inventory."
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date of the inventory."
+                  },
+                  "address": {
+                    "$ref": "#/definitions/commonAddress",
+                    "description": "Address of the User."
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Quantity of the inventory."
+                  },
+                  "subscriptionPrice": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Total Subscription amount of the inventory subscribed."
+                  },
+                  "state": {
+                    "$ref": "#/definitions/commonState",
+                    "description": "State of the zone."
+                  },
+                  "origin": {
+                    "type": "object",
+                    "$ref": "#/definitions/commonOrigin",
+                    "description": "User origin details: like created time, update time etc"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Version stores the DB version of the zone."
+                  },
+                  "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "description": "Tags stores the key value pairs of the zone."
+                  }
+                },
+                "description": "The Create/Update payload of the Subscription.",
+                "title": "Subscription create/update data payload",
+                "required": [
+                  "inventoryId",
+                  "enterpriseId",
+                  "centerId"
+                ]
+              }
+            }
+          ],
+          "tags": [
+            "SubscriptionService"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "centerresourceSubscription": {
+        "type": "object",
+        "example": {
+          "inventoryId": "{inventoryId}",
+          "enterpriseId": "{enterpriseId}",
+          "startDate": "{startDate}",
+          "endDate": "{endDate}"
+        },
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the zone."
+          },
+          "inventoryId": {
+            "type": "string",
+            "description": "Unique Identifier of the Inventory."
+          },
+          "description": {
+            "type": "string",
+            "description": "Description for the zone."
+          },
+          "enterpriseId": {
+            "type": "string",
+            "description": "Unique identifier for the enterprise in which zone belongs to."
+          },
+          "userId": {
+            "type": "string",
+            "description": "Unique identifier for the User in which subscription belongs to."
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date of the inventory."
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "End date of the inventory."
+          },
+          "address": {
+            "$ref": "#/definitions/commonAddress",
+            "description": "Address of the User."
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Quantity of the inventory."
+          },
+          "subscriptionPrice": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total Subscription amount of the inventory subscribed."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State of the zone."
+          },
+          "origin": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrigin",
+            "description": "User origin details: like created time, update time etc"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Version stores the DB version of the zone."
+          },
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Tags stores the key value pairs of the zone."
+          }
+        },
+        "description": "The Create/Update payload of the Subscription.",
+        "title": "Subscription create/update data payload",
+        "required": [
+          "inventoryId",
+          "enterpriseId",
+          "centerId"
+        ]
+      },
+      "centerresourceSubscriptionCreateRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "Unique identifier for the user in which Subscription belongs to."
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/centerresourceSubscription"
+            },
+            "description": "List of the Subscriptions."
+          }
+        }
+      },
+      "centerresourceSubscriptionFilter": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/commonKeyValue"
+            },
+            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+          },
+          "state": {
+            "$ref": "#/definitions/commonState",
+            "description": "State, filters based on the zone state"
+          },
+          "order": {
+            "type": "object",
+            "$ref": "#/definitions/commonOrder",
+            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ValidFrom date of the inventory."
+          },
+          "validTo": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ValidTill date of the inventory."
+          }
+        },
+        "description": "SubscriptionFilter request paylod",
+        "title": "SubscriptionFilter payload detail"
+      },
+      "centerresourceSubscriptionListResponse": {
+        "type": "object",
+        "properties": {
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/centerresourceSubscription"
+            },
+            "description": "List of subscriptions."
+          },
+          "cursor": {
+            "type": "object",
+            "$ref": "#/definitions/commonCursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+          }
+        },
+        "description": "Subscription list response details.",
+        "title": "Subscription list response details"
+      },
+      "centerresourceSubscriptionResponse": {
+        "type": "object",
+        "example": {
+          "status": "Subscription created Successfully."
+        },
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status message of the operation."
+          }
+        },
+        "description": "Subscription create/update response details.",
+        "title": "Subscription create/update response details"
+      },
+      "commonAddress": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name in the address"
+          },
+          "street": {
+            "type": "string",
+            "description": "Address Line 1 for Street, buiding/flat details etc"
+          },
+          "area": {
+            "type": "string",
+            "description": "Address Line 2 for village/sector"
+          },
+          "locality": {
+            "type": "string",
+            "description": "Nearest locality of the address within the given pincode."
+          },
+          "city": {
+            "type": "string",
+            "description": "City"
+          },
+          "state": {
+            "type": "string",
+            "description": "State or Province"
+          },
+          "pincode": {
+            "type": "integer",
+            "format": "int32",
+            "example": 94101,
+            "description": "ZIP or Postal Code"
+          }
+        },
+        "description": "An address associated with an enterprise",
+        "title": "Address object"
+      },
+      "commonCursor": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Offset"
+          },
+          "pageNum": {
+            "type": "number",
+            "format": "int32",
+            "description": "Page Number"
+          },
+          "limit": {
+            "type": "number",
+            "format": "int32",
+            "description": "Defines the page size/limit"
+          },
+          "totalPages": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of pages to be fetched."
+          },
+          "totalRecords": {
+            "type": "number",
+            "format": "int64",
+            "description": "Total number of records."
+          }
+        },
+        "description": "Cursor helps in filtering the various list response.",
+        "title": "Cursor is used as filter in list operation."
+      },
+      "commonKeyValue": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Key of the attribute."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the attribute assoiacteed wwith the key."
+          }
+        },
+        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+        "title": "KeyValue is used to store the key value information.",
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "commonOrder": {
+        "type": "object",
+        "properties": {
+          "orderBy": {
+            "type": "string",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise."
+          },
+          "order": {
+            "$ref": "#/definitions/commonSortOrder",
+            "description": "Sort order can be ASCENDING/DESCENDING"
+          }
+        }
+      },
+      "commonOrigin": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "User data: Created time"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "User data: Created By"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The time when the record was last updated."
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "User data: Updated By"
+          }
+        },
+        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+        "title": "Origin object"
+      },
+      "commonSortOrder": {
+        "type": "string",
+        "enum": [
+          "SORT_ORDER_UNSPECIFIED",
+          "SORT_ORDER_ASCENDING",
+          "SORT_ORDER_DESCENDING"
+        ],
+        "default": "SORT_ORDER_UNSPECIFIED"
+      },
+      "commonState": {
+        "type": "string",
+        "enum": [
+          "STATE_UNSPECIFIED",
+          "STATE_CREATED",
+          "STATE_ACTIVE",
+          "STATE_SUSPENDED",
+          "STATE_CLOSED",
+          "STATE_PAUSED",
+          "STATE_PENDING",
+          "STATE_EXPIRED"
+        ],
+        "default": "STATE_UNSPECIFIED",
+        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+      },
+      "protobufAny": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": {}
+      },
+      "rpcStatus": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/protobufAny"
+            }
+          }
+        }
+      }
+    }
+  }
+  

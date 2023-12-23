@@ -9,6 +9,7 @@ window.onload = function() {
       {url: "swaggers/center.json", name: "Center APIs"},
       {url: "swaggers/product.json", name: "Product APIs"},
       {url: "swaggers/zone.json", name: "Zone APIs"},
+      {url: "swaggers/subscription.json", name: "Subscription APIs"},
       {url: "swaggers/inventory.json", name: "Inventory APIs"}
     ],
     dom_id: '#swagger-ui',
