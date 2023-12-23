@@ -204,7 +204,7 @@
         ]
       }
     },
-    "/v1/subscriptions/user/{userId}/{id}": {
+    "/v1/subscriptions/user/{userId}/id/{id}": {
       "get": {
         "summary": "GetById Subscription",
         "operationId": "SubscriptionService_GetById",
@@ -432,7 +432,7 @@
         ]
       }
     },
-    "/v1/subscriptions/user/{userId}/{id}/renew": {
+    "/v1/subscriptions/user/{userId}/id/{id}/renew": {
       "put": {
         "summary": "Renew Subscription",
         "operationId": "SubscriptionService_Renew",
