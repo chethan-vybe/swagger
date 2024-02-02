@@ -1,0 +1,714 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/dmsg/iam/user.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "UserService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/users": {
+      "get": {
+        "summary": "List all Users",
+        "operationId": "UserService_List",
+        "responses": {
+          "200": {
+            "description": "Successful response of iam list",
+            "schema": {
+              "$ref": "#/definitions/iamUsersListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamUsersListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filters",
+            "description": "User filter",
+            "in": "query",
+            "required": false,
+            "type": "object"
+          },
+          {
+            "name": "cursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+            "in": "query",
+            "required": false,
+            "type": "object"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      },
+      "post": {
+        "summary": "Create User",
+        "operationId": "UserService_Create",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The Create/Update payload of the User.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/users/{id}": {
+      "get": {
+        "summary": "GetById User",
+        "operationId": "UserService_GetById",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      },
+      "delete": {
+        "summary": "Delete User",
+        "operationId": "UserService_Delete",
+        "responses": {
+          "200": {
+            "description": "Successful deleted the iam resource",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid data, Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "User Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      },
+      "put": {
+        "summary": "Update User",
+        "operationId": "UserService_Update",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier for the User.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "example": {
+                "name": "test",
+                "email": "test-User@admin.com",
+                "contactNumber": "+91 1234567890"
+              },
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "name of the User."
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Password of the User."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description for the User."
+                },
+                "enterpriseId": {
+                  "type": "string",
+                  "description": "Unique identifier for the user in which User belongs to."
+                },
+                "roleId": {
+                  "type": "string",
+                  "description": "Unique identifier for the Roles in which User access to."
+                },
+                "type": {
+                  "$ref": "#/definitions/iamUserType",
+                  "description": "Tpe of the User, could be REGULAR etc."
+                },
+                "addresses": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/commonAddress"
+                  },
+                  "description": "Address of the User."
+                },
+                "contactNumber": {
+                  "type": "string",
+                  "description": "Contact of the User."
+                },
+                "profileName": {
+                  "type": "string",
+                  "description": "profileName of the User."
+                },
+                "state": {
+                  "$ref": "#/definitions/commonState",
+                  "description": "State of the User."
+                },
+                "origin": {
+                  "type": "object",
+                  "$ref": "#/definitions/commonOrigin",
+                  "description": "User origin details: like created time, update time etc"
+                },
+                "version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version stores the DB version of the User."
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags stores the key value pairs of the user."
+                }
+              },
+              "description": "The Create/Update payload of the User.",
+              "title": "User create/update data payload",
+              "required": [
+                "name",
+                "address",
+                "contact",
+                "email"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
+    "/v1/users/{name}": {
+      "get": {
+        "summary": "GetByName User",
+        "operationId": "UserService_GetByName",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/iamUser"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Unique name of the User within the given user",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "UserService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name in the address"
+        },
+        "street": {
+          "type": "string",
+          "description": "Address Line 1 for Street, buiding/flat details etc"
+        },
+        "area": {
+          "type": "string",
+          "description": "Address Line 2 for village/sector"
+        },
+        "locality": {
+          "type": "string",
+          "description": "Nearest locality of the address within the given pincode."
+        },
+        "city": {
+          "type": "string",
+          "description": "City"
+        },
+        "state": {
+          "type": "string",
+          "description": "State or Province"
+        },
+        "pincode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 94101,
+          "description": "ZIP or Postal Code"
+        }
+      },
+      "description": "An address associated with an enterprise",
+      "title": "Address object"
+    },
+    "commonCursor": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Offset"
+        },
+        "pageNum": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Number"
+        },
+        "limit": {
+          "type": "number",
+          "format": "int32",
+          "description": "Defines the page size/limit"
+        },
+        "totalPages": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of pages to be fetched."
+        },
+        "totalRecords": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of records."
+        }
+      },
+      "description": "Cursor helps in filtering the various list response.",
+      "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+    },
+    "commonKeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Key of the attribute."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the attribute assoiacteed wwith the key."
+        }
+      },
+      "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+      "title": "KeyValue is used to store the key value information.",
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commonOrder": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string",
+          "description": "Sort by attributes used for sorting based on what field of the enterprise."
+        },
+        "order": {
+          "$ref": "#/definitions/commonSortOrder",
+          "description": "Sort order can be ASCENDING/DESCENDING"
+        }
+      }
+    },
+    "commonOrigin": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "User data: Created time"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User data: Created By"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when the record was last updated."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "User data: Updated By"
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "Origin object"
+    },
+    "commonSortOrder": {
+      "type": "string",
+      "enum": [
+        "SORT_ORDER_UNSPECIFIED",
+        "SORT_ORDER_ASCENDING",
+        "SORT_ORDER_DESCENDING"
+      ],
+      "default": "SORT_ORDER_UNSPECIFIED"
+    },
+    "commonState": {
+      "type": "string",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "STATE_CREATED",
+        "STATE_ACTIVE",
+        "STATE_SUSPENDED",
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED"
+      ],
+      "default": "STATE_UNSPECIFIED",
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+    },
+    "iamUser": {
+      "type": "object",
+      "example": {
+        "name": "test",
+        "email": "test-User@admin.com",
+        "contactNumber": "+91 1234567890"
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "name of the User."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the User."
+        },
+        "password": {
+          "type": "string",
+          "description": "Password of the User."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the User."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the user in which User belongs to."
+        },
+        "roleId": {
+          "type": "string",
+          "description": "Unique identifier for the Roles in which User access to."
+        },
+        "type": {
+          "$ref": "#/definitions/iamUserType",
+          "description": "Tpe of the User, could be REGULAR etc."
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonAddress"
+          },
+          "description": "Address of the User."
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact of the User."
+        },
+        "profileName": {
+          "type": "string",
+          "description": "profileName of the User."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State of the User."
+        },
+        "origin": {
+          "type": "object",
+          "$ref": "#/definitions/commonOrigin",
+          "description": "User origin details: like created time, update time etc"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the User."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the user."
+        }
+      },
+      "description": "The Create/Update payload of the User.",
+      "title": "User create/update data payload",
+      "required": [
+        "name",
+        "address",
+        "contact",
+        "email"
+      ]
+    },
+    "iamUserFilter": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB.",
+          "title": "do we need role id ??"
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State, filters based on the User state"
+        },
+        "type": {
+          "$ref": "#/definitions/iamUserType",
+          "description": "State, filters based on the User state"
+        },
+        "order": {
+          "type": "object",
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        }
+      },
+      "description": "UserFilter request paylod used list the Users with the various filters like State, name etc.",
+      "title": "UserFilter payload detail"
+    },
+    "iamUserType": {
+      "type": "string",
+      "enum": [
+        "USER_TYPE_UNSPECIFIED",
+        "USER_TYPE_SYSTEM_DEFINED_ENTP_USER",
+        "USER_TYPE_ENTP_USER",
+        "USER_TYPE_SYSTEM_DEFINED_END_USER",
+        "USER_TYPE_END_USER"
+      ],
+      "default": "USER_TYPE_UNSPECIFIED"
+    },
+    "iamUsersListResponse": {
+      "type": "object",
+      "properties": {
+        "Users": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/iamUser"
+          },
+          "description": "List of Users."
+        },
+        "cursor": {
+          "type": "object",
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "User list response details.",
+      "title": "User list response details"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

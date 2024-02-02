@@ -1,0 +1,677 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/dmsg/iam/role.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "RoleService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/roles": {
+      "get": {
+        "summary": "List all roles",
+        "operationId": "RoleService_List",
+        "responses": {
+          "200": {
+            "description": "Successful response of iam list",
+            "schema": {
+              "$ref": "#/definitions/iamRoleListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamRoleListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "filters",
+            "description": "Role filter",
+            "in": "query",
+            "required": false,
+            "type": "object"
+          },
+          {
+            "name": "cursor",
+            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+            "in": "query",
+            "required": false,
+            "type": "object"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      },
+      "post": {
+        "summary": "Create Role",
+        "operationId": "RoleService_Create",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      }
+    },
+    "/v1/roles/{id}": {
+      "get": {
+        "summary": "GetById Role",
+        "operationId": "RoleService_GetById",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the Role",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Role",
+        "operationId": "RoleService_Delete",
+        "responses": {
+          "200": {
+            "description": "Successful deleted the iam resource",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid data, Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Role Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique Identifier of the Role",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      },
+      "put": {
+        "summary": "Update Role",
+        "operationId": "RoleService_Update",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier for the role",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the role."
+                },
+                "enterpriseId": {
+                  "type": "string",
+                  "description": "Unique identifier for the role in which role belongs to."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description for the role."
+                },
+                "state": {
+                  "$ref": "#/definitions/commonState",
+                  "description": "State of the role."
+                },
+                "type": {
+                  "$ref": "#/definitions/iamRoleType"
+                },
+                "scopes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/iamScope"
+                  }
+                },
+                "version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version stores the DB version of the role."
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags stores the key value pairs of the role."
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      }
+    },
+    "/v1/roles/{name}": {
+      "get": {
+        "summary": "GetByName Role",
+        "operationId": "RoleService_GetByName",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/iamRole"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Unique name of the Role within the given role",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RoleService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "commonCursor": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Offset"
+        },
+        "pageNum": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Number"
+        },
+        "limit": {
+          "type": "number",
+          "format": "int32",
+          "description": "Defines the page size/limit"
+        },
+        "totalPages": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of pages to be fetched."
+        },
+        "totalRecords": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of records."
+        }
+      },
+      "description": "Cursor helps in filtering the various list response.",
+      "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+    },
+    "commonKeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Key of the attribute."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the attribute assoiacteed wwith the key."
+        }
+      },
+      "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+      "title": "KeyValue is used to store the key value information.",
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commonOrder": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string",
+          "description": "Sort by attributes used for sorting based on what field of the enterprise."
+        },
+        "order": {
+          "$ref": "#/definitions/commonSortOrder",
+          "description": "Sort order can be ASCENDING/DESCENDING"
+        }
+      }
+    },
+    "commonSortOrder": {
+      "type": "string",
+      "enum": [
+        "SORT_ORDER_UNSPECIFIED",
+        "SORT_ORDER_ASCENDING",
+        "SORT_ORDER_DESCENDING"
+      ],
+      "default": "SORT_ORDER_UNSPECIFIED"
+    },
+    "commonState": {
+      "type": "string",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "STATE_CREATED",
+        "STATE_ACTIVE",
+        "STATE_SUSPENDED",
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED"
+      ],
+      "default": "STATE_UNSPECIFIED",
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+    },
+    "iamAccess": {
+      "type": "string",
+      "enum": [
+        "ACCESS_UNSPECIFIED",
+        "ACCESS_CREATE",
+        "ACCESS_READ",
+        "ACCESS_CREATE_READ",
+        "ACCESS_UPDATE",
+        "ACCESS_CREATE_UPDATE",
+        "ACCESS_READ_UPDATE",
+        "ACCESS_CREATE_READ_UPDATE",
+        "ACCESS_DELETE",
+        "ACCESS_CREATE_DELETE",
+        "ACCESS_READ_DELETE",
+        "ACCESS_CREATE_READ_DELETE",
+        "ACCESS_UPDATE_DELETE",
+        "ACCESS_CREATE_UPDATE_DELETE",
+        "ACCESS_READ_UPDATE_DELETE",
+        "ACCESS_CREATE_READ_UPDATE_DELETE"
+      ],
+      "default": "ACCESS_UNSPECIFIED"
+    },
+    "iamPermission": {
+      "type": "object",
+      "properties": {
+        "resourceType": {
+          "$ref": "#/definitions/iamResourceType"
+        },
+        "access": {
+          "$ref": "#/definitions/iamAccess"
+        }
+      }
+    },
+    "iamResourceScope": {
+      "type": "object",
+      "properties": {
+        "scopedResourceType": {
+          "$ref": "#/definitions/iamScopedResourceType"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "iamResourceType": {
+      "type": "string",
+      "enum": [
+        "RESOURCE_TYPE_UNSPECIFIED",
+        "RESOURCE_TYPE_ENTERPRISE",
+        "RESOURCE_TYPE_PRODUCT",
+        "RESOURCE_TYPE_FARM",
+        "RESOURCE_TYPE_DISTRIBUTION",
+        "RESOURCE_TYPE_FARM_RESOURCE",
+        "RESOURCE_TYPE_DISTRIBUTION_RESOURCE",
+        "RESOURCE_TYPE_USER",
+        "RESOURCE_TYPE_ROLE",
+        "RESOURCE_TYPE_MARKETPLACE",
+        "RESOURCE_TYPE_DELIVERY"
+      ],
+      "default": "RESOURCE_TYPE_UNSPECIFIED",
+      "title": "- RESOURCE_TYPE_ENTERPRISE: if user has access on entp then they have access on PRODUCT, SKU, DISCOUNT\n - RESOURCE_TYPE_PRODUCT: PRODUCT and SKU\n - RESOURCE_TYPE_FARM_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_DISTRIBUTION_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_MARKETPLACE: for end users\n - RESOURCE_TYPE_DELIVERY: for end users"
+    },
+    "iamRole": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the role."
+        },
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the role"
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the role in which role belongs to."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the role."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State of the role."
+        },
+        "type": {
+          "$ref": "#/definitions/iamRoleType"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/iamScope"
+          }
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the role."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the role."
+        }
+      }
+    },
+    "iamRoleFilter": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB.",
+          "title": "do we need role id ??"
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State, filters based on the Role state"
+        },
+        "type": {
+          "$ref": "#/definitions/iamRoleType",
+          "description": "State, filters based on the Role state"
+        },
+        "order": {
+          "type": "object",
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        }
+      },
+      "description": "RoleFilter request paylod used list the Role with the various filters like State, name etc.",
+      "title": "RoleFilter payload detail"
+    },
+    "iamRoleListResponse": {
+      "type": "object",
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/iamRole"
+          },
+          "description": "List of roles."
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "Role list response details.",
+      "title": "Role list response details",
+      "required": [
+        "roles",
+        "cursor"
+      ]
+    },
+    "iamRoleType": {
+      "type": "string",
+      "enum": [
+        "ROLE_TYPE_UNSPECIFIED",
+        "ROLE_TYPE_SYSTEM_DEFINED_ROOT_USER",
+        "ROLE_TYPE_SYSTEM_DEFINED_ENTP_USER",
+        "ROLE_TYPE_SYSTEM_DEFINED_END_USER",
+        "ROLE_TYPE_USER_DEFINED"
+      ],
+      "default": "ROLE_TYPE_UNSPECIFIED"
+    },
+    "iamScope": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/iamPermission"
+          }
+        },
+        "resourceScopes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/iamResourceScope"
+          }
+        }
+      }
+    },
+    "iamScopedResourceType": {
+      "type": "string",
+      "enum": [
+        "SCOPED_RESOURCE_TYPE_UNSPECIFIED",
+        "SCOPED_RESOURCE_TYPE_ENTERPRISE",
+        "SCOPED_RESOURCE_TYPE_FARM",
+        "SCOPED_RESOURCE_TYPE_DISTRIBUTION"
+      ],
+      "default": "SCOPED_RESOURCE_TYPE_UNSPECIFIED",
+      "title": "- SCOPED_RESOURCE_TYPE_DISTRIBUTION: SCOPED_RESOURCE_TYPE_CENTER = 4; // should we keep just center ?? XXX"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
