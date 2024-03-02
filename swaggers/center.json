@@ -17,6 +17,52 @@
   ],
   "paths": {
     "/v1/centers": {
+      "post": {
+        "summary": "Create Center",
+        "operationId": "CenterService_Create",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The Create/Update payload of the Center.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/enterpriseCenter"
+            }
+          }
+        ],
+        "tags": [
+          "CenterService"
+        ]
+      }
+    },
+    "/v1/centers/type/{type}": {
       "get": {
         "summary": "List all Centers",
         "operationId": "CenterService_List",
@@ -41,6 +87,13 @@
           }
         },
         "parameters": [
+          {
+            "name": "type",
+            "description": "This center id is used while fetching the associated centers list.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "id",
             "description": "This center id is used while fetching the associated centers list.",
@@ -151,50 +204,6 @@
               "type": "string"
             },
             "collectionFormat": "multi"
-          }
-        ],
-        "tags": [
-          "CenterService"
-        ]
-      },
-      "post": {
-        "summary": "Create Center",
-        "operationId": "CenterService_Create",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "schema": {
-              "$ref": "#/definitions/commonDResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/commonDResponse"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/commonDResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "description": "The Create/Update payload of the Center.",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
-            }
           }
         ],
         "tags": [
@@ -427,6 +436,13 @@
             "description": "This center id is used while fetching the associated centers list.",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "description": "This center id is used while fetching the associated centers list.",
+            "in": "query",
+            "required": false,
             "type": "string"
           },
           {
