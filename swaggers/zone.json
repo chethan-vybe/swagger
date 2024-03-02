@@ -24,13 +24,13 @@
           "200": {
             "description": "Successful response of zone list",
             "schema": {
-              "$ref": ".centerresource.ZoneList"
+              "$ref": "#/definitions/centerresourceZoneListResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": ".centerresource.ZoneList"
+              "$ref": "#/definitions/centerresourceZoneListResponse"
             }
           },
           "default": {
@@ -78,19 +78,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -208,19 +208,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -311,21 +311,21 @@
         ]
       }
     },
-    "/v1/zones/{id}/{pincode}": {
+    "/v1/zones/{pincode}/center": {
       "get": {
-        "summary": "List localities by pincode",
+        "summary": "center detail by pincode",
         "operationId": "ZoneService_ListLocalityByZone",
         "responses": {
           "200": {
-            "description": "Successful response of zone list",
+            "description": "Successful response of center detail",
             "schema": {
-              "$ref": "#/definitions/centerresourcePincodeDetails"
+              "$ref": "#/definitions/centerresourceCenterDetails"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourcePincodeDetails"
+              "$ref": "#/definitions/centerresourceCenterDetails"
             }
           },
           "default": {
@@ -337,15 +337,8 @@
         },
         "parameters": [
           {
-            "name": "id",
-            "description": "Unique Identifier of the Zone",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "pincode",
-            "description": "Pincode of the Zone",
+            "description": "Pincode",
             "in": "path",
             "required": true,
             "type": "string"
@@ -358,10 +351,46 @@
     }
   },
   "definitions": {
+    "centerresourceCenterDetails": {
+      "type": "object",
+      "properties": {
+        "zoneName": {
+          "type": "string",
+          "description": "Name of the zone"
+        },
+        "zoneId": {
+          "type": "string",
+          "description": "Unique identifier of the zone."
+        },
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier of the center."
+        },
+        "pincode": {
+          "type": "string",
+          "description": "Pincode of the zone"
+        },
+        "localities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of localities associated with particular pincode."
+        }
+      },
+      "description": "The PincodeDetails details",
+      "title": "PincodeDetails details",
+      "required": [
+        "zoneName",
+        "zoneId",
+        "centerId",
+        "pincode"
+      ]
+    },
     "centerresourcePincodeDetails": {
       "type": "object",
       "properties": {
-        "code": {
+        "pincode": {
           "type": "string",
           "description": "Pincode of the zone"
         },
@@ -494,20 +523,6 @@
       "description": "Zone list response details.",
       "title": "Zone list response details"
     },
-    "centerresourceZoneResponse": {
-      "type": "object",
-      "example": {
-        "status": "Zone created Successfully."
-      },
-      "properties": {
-        "status": {
-          "type": "string",
-          "description": "Status message of the operation."
-        }
-      },
-      "description": "Zone create/update response details.",
-      "title": "Zone create/update response details"
-    },
     "commonCursor": {
       "type": "object",
       "properties": {
@@ -539,6 +554,21 @@
       },
       "description": "Cursor helps in filtering the various list response.",
       "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
     },
     "commonKeyValue": {
       "type": "object",
@@ -613,10 +643,15 @@
         "STATE_CREATED",
         "STATE_ACTIVE",
         "STATE_SUSPENDED",
-        "STATE_CLOSED"
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "protobufAny": {
       "type": "object",
