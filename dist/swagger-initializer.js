@@ -13,7 +13,9 @@ window.onload = function() {
       {url: "swaggers/inventory.json", name: "Inventory APIs"},
       {url: "swaggers/authentication.json", name: "Login/Sign up APIs"},
       {url: "swaggers/user.json", name: "User APIs"},
-      {url: "swaggers/role.json", name: "Role APIs"}
+      {url: "swaggers/role.json", name: "Role APIs"},
+      {url: "swaggers/cart.json", name: "Cart APIs"},
+      {url: "swaggers/order.json", name: "Order APIs"}
     ],
     dom_id: '#swagger-ui',
     deepLinking: true,
