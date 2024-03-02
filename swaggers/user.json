@@ -310,6 +310,19 @@
                     "type": "string"
                   },
                   "description": "Tags stores the key value pairs of the user."
+                },
+                "enterpriseName": {
+                  "type": "string",
+                  "description": "enterprise name"
+                },
+                "loginMode": {
+                  "$ref": "#/definitions/commonLoginMode"
+                },
+                "contactNumberVerified": {
+                  "type": "boolean"
+                },
+                "nameVerified": {
+                  "type": "boolean"
                 }
               },
               "description": "The Create/Update payload of the User.",
@@ -406,6 +419,10 @@
           "format": "int32",
           "example": 94101,
           "description": "ZIP or Postal Code"
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact number"
         }
       },
       "description": "An address associated with an enterprise",
@@ -477,6 +494,16 @@
         "value"
       ]
     },
+    "commonLoginMode": {
+      "type": "string",
+      "enum": [
+        "LOGIN_MODE_UNSPECIFIED",
+        "LOGIN_MODE_EMAIL",
+        "LOGIN_MODE_SMS",
+        "LOGIN_MODE_PASSWORD"
+      ],
+      "default": "LOGIN_MODE_UNSPECIFIED"
+    },
     "commonOrder": {
       "type": "object",
       "properties": {
@@ -534,10 +561,12 @@
         "STATE_CLOSED",
         "STATE_PAUSED",
         "STATE_PENDING",
-        "STATE_EXPIRED"
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "iamUser": {
       "type": "object",
@@ -611,6 +640,19 @@
             "type": "string"
           },
           "description": "Tags stores the key value pairs of the user."
+        },
+        "enterpriseName": {
+          "type": "string",
+          "description": "enterprise name"
+        },
+        "loginMode": {
+          "$ref": "#/definitions/commonLoginMode"
+        },
+        "contactNumberVerified": {
+          "type": "boolean"
+        },
+        "nameVerified": {
+          "type": "boolean"
         }
       },
       "description": "The Create/Update payload of the User.",

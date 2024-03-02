@@ -435,10 +435,12 @@
         "STATE_CLOSED",
         "STATE_PAUSED",
         "STATE_PENDING",
-        "STATE_EXPIRED"
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "iamAccess": {
       "type": "string",
@@ -500,10 +502,12 @@
         "RESOURCE_TYPE_USER",
         "RESOURCE_TYPE_ROLE",
         "RESOURCE_TYPE_MARKETPLACE",
-        "RESOURCE_TYPE_DELIVERY"
+        "RESOURCE_TYPE_DELIVERY",
+        "RESOURCE_TYPE_CENTER_RESOURCE",
+        "RESOURCE_TYPE_CENTER"
       ],
       "default": "RESOURCE_TYPE_UNSPECIFIED",
-      "title": "- RESOURCE_TYPE_ENTERPRISE: if user has access on entp then they have access on PRODUCT, SKU, DISCOUNT\n - RESOURCE_TYPE_PRODUCT: PRODUCT and SKU\n - RESOURCE_TYPE_FARM_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_DISTRIBUTION_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_MARKETPLACE: for end users\n - RESOURCE_TYPE_DELIVERY: for end users"
+      "title": "- RESOURCE_TYPE_ENTERPRISE: if user has access on entp then they have access on PRODUCT, SKU, DISCOUNT\n - RESOURCE_TYPE_PRODUCT: PRODUCT and SKU\n - RESOURCE_TYPE_FARM_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_DISTRIBUTION_RESOURCE: if user has access on inventory then they have access on ZONE, INVENTORY, ORDER, SUBSCRIPTION\n - RESOURCE_TYPE_MARKETPLACE: for end users\n - RESOURCE_TYPE_DELIVERY: for end users\n - RESOURCE_TYPE_CENTER_RESOURCE: internal only\n - RESOURCE_TYPE_CENTER: internal only, used for read and delete center"
     },
     "iamRole": {
       "type": "object",
@@ -642,8 +646,7 @@
         "SCOPED_RESOURCE_TYPE_FARM",
         "SCOPED_RESOURCE_TYPE_DISTRIBUTION"
       ],
-      "default": "SCOPED_RESOURCE_TYPE_UNSPECIFIED",
-      "title": "- SCOPED_RESOURCE_TYPE_DISTRIBUTION: SCOPED_RESOURCE_TYPE_CENTER = 4; // should we keep just center ?? XXX"
+      "default": "SCOPED_RESOURCE_TYPE_UNSPECIFIED"
     },
     "protobufAny": {
       "type": "object",

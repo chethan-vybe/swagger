@@ -43,7 +43,7 @@
         "parameters": [
           {
             "name": "filters.state",
-            "description": "State, filters based on the Product state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.",
+            "description": "State, filters based on the Product state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -52,7 +52,12 @@
               "STATE_CREATED",
               "STATE_ACTIVE",
               "STATE_SUSPENDED",
-              "STATE_CLOSED"
+              "STATE_CLOSED",
+              "STATE_PAUSED",
+              "STATE_PENDING",
+              "STATE_EXPIRED",
+              "STATE_FAILED",
+              "STATE_COMPLETE"
             ],
             "default": "STATE_UNSPECIFIED"
           },
@@ -146,19 +151,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -234,19 +239,19 @@
           "200": {
             "description": "Successful deleted the Product resource",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": ".enterprise.common.DResponse"
             }
           },
           "400": {
             "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Product Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -276,19 +281,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -390,19 +395,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -415,7 +420,7 @@
         "parameters": [
           {
             "name": "productId",
-            "description": "Unique Identifier for the Prodducct in which SKU is associated with.",
+            "description": "Unique identifier for the Product.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -428,16 +433,23 @@
               "type": "object",
               "example": {
                 "productId": "{productId}",
-                "sku": "{sku}"
+                "skus": "{skus}"
               },
               "properties": {
-                "sku": {
-                  "$ref": "#/definitions/enterpriseSKU",
-                  "description": "SKU(Sellable Unit) of the Product."
+                "skus": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/enterpriseSKU"
+                  },
+                  "description": "List of available SKUs(Sellable Unit) of the Product."
                 }
               },
-              "description": "ProductSKU is the identenfier place holder for product and SKU",
-              "title": "ProductSKU is the identenfier place holder for product and SKU"
+              "description": "The Create payload of the SKUs.",
+              "title": "Product SKUs create data payload",
+              "required": [
+                "skus"
+              ]
             }
           }
         ],
@@ -503,19 +515,19 @@
           "200": {
             "description": "Successful deleted the SKU resource",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Product Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -554,19 +566,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseProductResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -710,6 +722,21 @@
       "description": "Cursor helps in filtering the various list response.",
       "title": "Cursor is used as filter in list operation."
     },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+    },
     "commonKeyValue": {
       "type": "object",
       "properties": {
@@ -758,10 +785,15 @@
         "STATE_CREATED",
         "STATE_ACTIVE",
         "STATE_SUSPENDED",
-        "STATE_CLOSED"
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "enterpriseProduct": {
       "type": "object",
@@ -895,28 +927,13 @@
       "description": "Product request paylod",
       "title": "ProductFilter payload detail"
     },
-    "enterpriseProductResponse": {
-      "type": "object",
-      "example": {
-        "status": "Product Test created Successfully."
-      },
-      "properties": {
-        "status": {
-          "type": "string",
-          "description": "Status message of the operation."
-        }
-      },
-      "description": "Product create/update response details.",
-      "title": "Product create/update response details"
-    },
     "enterpriseProductType": {
       "type": "string",
       "enum": [
         "PRODUCT_TYPE_UNSPECIFIED",
         "PRODUCT_TYPE_DAIRY"
       ],
-      "default": "PRODUCT_TYPE_UNSPECIFIED",
-      "title": "TODO: add atype of product"
+      "default": "PRODUCT_TYPE_UNSPECIFIED"
     },
     "enterpriseProductsListResponse": {
       "type": "object",

@@ -50,7 +50,7 @@
           },
           {
             "name": "filters.state",
-            "description": "State, filters based on the Center state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.",
+            "description": "State, filters based on the Center state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -59,7 +59,12 @@
               "STATE_CREATED",
               "STATE_ACTIVE",
               "STATE_SUSPENDED",
-              "STATE_CLOSED"
+              "STATE_CLOSED",
+              "STATE_PAUSED",
+              "STATE_PENDING",
+              "STATE_EXPIRED",
+              "STATE_FAILED",
+              "STATE_COMPLETE"
             ],
             "default": "STATE_UNSPECIFIED"
           },
@@ -72,7 +77,7 @@
             "enum": [
               "CENTER_TYPE_UNSPECIFIED",
               "CENTER_TYPE_FARM",
-              "CENTER_TYPE_DISTRIBUTOR"
+              "CENTER_TYPE_DISTRIBUTION"
             ],
             "default": "CENTER_TYPE_UNSPECIFIED"
           },
@@ -159,19 +164,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -247,19 +252,19 @@
           "200": {
             "description": "Successful deleted the enterprise resource",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Center Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -289,19 +294,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/enterpriseCenterResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -426,7 +431,7 @@
           },
           {
             "name": "filters.state",
-            "description": "State, filters based on the Center state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.",
+            "description": "State, filters based on the Center state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -435,7 +440,12 @@
               "STATE_CREATED",
               "STATE_ACTIVE",
               "STATE_SUSPENDED",
-              "STATE_CLOSED"
+              "STATE_CLOSED",
+              "STATE_PAUSED",
+              "STATE_PENDING",
+              "STATE_EXPIRED",
+              "STATE_FAILED",
+              "STATE_COMPLETE"
             ],
             "default": "STATE_UNSPECIFIED"
           },
@@ -448,7 +458,7 @@
             "enum": [
               "CENTER_TYPE_UNSPECIFIED",
               "CENTER_TYPE_FARM",
-              "CENTER_TYPE_DISTRIBUTOR"
+              "CENTER_TYPE_DISTRIBUTION"
             ],
             "default": "CENTER_TYPE_UNSPECIFIED"
           },
@@ -528,50 +538,6 @@
           "CenterService"
         ]
       }
-    },
-    "/v1/centers/{name}": {
-      "get": {
-        "summary": "GetByName Center",
-        "operationId": "CenterService_GetByName",
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "$ref": "#/definitions/enterpriseCenter"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Unique name of the Center within the given enterprise",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CenterService"
-        ]
-      }
     }
   },
   "definitions": {
@@ -607,6 +573,10 @@
           "format": "int32",
           "example": 94101,
           "description": "ZIP or Postal Code"
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact number"
         }
       },
       "description": "An address associated with an enterprise",
@@ -643,6 +613,21 @@
       },
       "description": "Cursor helps in filtering the various list response.",
       "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
     },
     "commonKeyValue": {
       "type": "object",
@@ -692,10 +677,15 @@
         "STATE_CREATED",
         "STATE_ACTIVE",
         "STATE_SUSPENDED",
-        "STATE_CLOSED"
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "enterpriseCenter": {
       "type": "object",
@@ -790,26 +780,12 @@
       "description": "CenterFilter request paylod used list the centers with the various filters like State, name etc.",
       "title": "CenterFilter payload detail"
     },
-    "enterpriseCenterResponse": {
-      "type": "object",
-      "example": {
-        "status": "Center Test created Successfully."
-      },
-      "properties": {
-        "status": {
-          "type": "string",
-          "description": "Status message of the operation."
-        }
-      },
-      "description": "Center create/update response details.",
-      "title": "Center create/update response details"
-    },
     "enterpriseCenterType": {
       "type": "string",
       "enum": [
         "CENTER_TYPE_UNSPECIFIED",
         "CENTER_TYPE_FARM",
-        "CENTER_TYPE_DISTRIBUTOR"
+        "CENTER_TYPE_DISTRIBUTION"
       ],
       "default": "CENTER_TYPE_UNSPECIFIED"
     },
