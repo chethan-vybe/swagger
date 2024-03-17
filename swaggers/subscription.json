@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "api/dmsg/centerresource/subscription.proto",
+    "title": "api/dmsg/subscription/subscription.proto",
     "version": "version not set"
   },
   "tags": [
@@ -24,19 +24,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -52,7 +52,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionCreateRequest"
+              "$ref": "#/definitions/subscriptionSubscriptionCreateRequest"
             }
           }
         ],
@@ -69,13 +69,13 @@
           "200": {
             "description": "Successful response of zone list",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionListResponse"
+              "$ref": "#/definitions/subscriptionSubscriptionListResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionListResponse"
+              "$ref": "#/definitions/subscriptionSubscriptionListResponse"
             }
           },
           "default": {
@@ -94,8 +94,15 @@
             "type": "string"
           },
           {
+            "name": "centerId",
+            "description": "Unique identifier for the User in which subscription belongs to.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "filters.state",
-            "description": "State, filters based on the zone state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.",
+            "description": "State, filters based on the zone state\n\n - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed.",
             "in": "query",
             "required": false,
             "type": "string",
@@ -107,7 +114,9 @@
               "STATE_CLOSED",
               "STATE_PAUSED",
               "STATE_PENDING",
-              "STATE_EXPIRED"
+              "STATE_EXPIRED",
+              "STATE_FAILED",
+              "STATE_COMPLETE"
             ],
             "default": "STATE_UNSPECIFIED"
           },
@@ -212,19 +221,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "default": {
@@ -261,19 +270,19 @@
           "200": {
             "description": "Successful deleted the zone resource",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "400": {
             "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "404": {
             "description": "Subscription Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscription"
+              "$ref": "#/definitions/subscriptionSubscription"
             }
           },
           "default": {
@@ -310,19 +319,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -360,9 +369,21 @@
                 "endDate": "{endDate}"
               },
               "properties": {
-                "inventoryId": {
+                "productId": {
                   "type": "string",
-                  "description": "Unique Identifier of the Inventory."
+                  "description": "Unique Identifier of the product."
+                },
+                "productName": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
+                },
+                "skuId": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
+                },
+                "skuName": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
                 },
                 "description": {
                   "type": "string",
@@ -371,6 +392,10 @@
                 "enterpriseId": {
                   "type": "string",
                   "description": "Unique identifier for the enterprise in which zone belongs to."
+                },
+                "centerId": {
+                  "type": "string",
+                  "description": "Unique identifier for the Center in which subscription belongs to."
                 },
                 "startDate": {
                   "type": "string",
@@ -392,8 +417,8 @@
                   "description": "Quantity of the inventory."
                 },
                 "subscriptionPrice": {
-                  "type": "integer",
-                  "format": "int32",
+                  "type": "number",
+                  "format": "float",
                   "description": "Total Subscription amount of the inventory subscribed."
                 },
                 "state": {
@@ -440,19 +465,19 @@
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceSubscriptionResponse"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -490,9 +515,21 @@
                 "endDate": "{endDate}"
               },
               "properties": {
-                "inventoryId": {
+                "productId": {
                   "type": "string",
-                  "description": "Unique Identifier of the Inventory."
+                  "description": "Unique Identifier of the product."
+                },
+                "productName": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
+                },
+                "skuId": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
+                },
+                "skuName": {
+                  "type": "string",
+                  "description": "Unique Identifier of the product."
                 },
                 "description": {
                   "type": "string",
@@ -501,6 +538,10 @@
                 "enterpriseId": {
                   "type": "string",
                   "description": "Unique identifier for the enterprise in which zone belongs to."
+                },
+                "centerId": {
+                  "type": "string",
+                  "description": "Unique identifier for the Center in which subscription belongs to."
                 },
                 "startDate": {
                   "type": "string",
@@ -522,8 +563,8 @@
                   "description": "Quantity of the inventory."
                 },
                 "subscriptionPrice": {
-                  "type": "integer",
-                  "format": "int32",
+                  "type": "number",
+                  "format": "float",
                   "description": "Total Subscription amount of the inventory subscribed."
                 },
                 "state": {
@@ -564,171 +605,6 @@
     }
   },
   "definitions": {
-    "centerresourceSubscription": {
-      "type": "object",
-      "example": {
-        "inventoryId": "{inventoryId}",
-        "enterpriseId": "{enterpriseId}",
-        "startDate": "{startDate}",
-        "endDate": "{endDate}"
-      },
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the zone."
-        },
-        "inventoryId": {
-          "type": "string",
-          "description": "Unique Identifier of the Inventory."
-        },
-        "description": {
-          "type": "string",
-          "description": "Description for the zone."
-        },
-        "enterpriseId": {
-          "type": "string",
-          "description": "Unique identifier for the enterprise in which zone belongs to."
-        },
-        "userId": {
-          "type": "string",
-          "description": "Unique identifier for the User in which subscription belongs to."
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date-time",
-          "description": "Start date of the inventory."
-        },
-        "endDate": {
-          "type": "string",
-          "format": "date-time",
-          "description": "End date of the inventory."
-        },
-        "address": {
-          "$ref": "#/definitions/commonAddress",
-          "description": "Address of the User."
-        },
-        "quantity": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Quantity of the inventory."
-        },
-        "subscriptionPrice": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Total Subscription amount of the inventory subscribed."
-        },
-        "state": {
-          "$ref": "#/definitions/commonState",
-          "description": "State of the zone."
-        },
-        "origin": {
-          "$ref": "#/definitions/commonOrigin",
-          "description": "User origin details: like created time, update time etc"
-        },
-        "version": {
-          "type": "integer",
-          "format": "int32",
-          "description": "Version stores the DB version of the zone."
-        },
-        "tags": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Tags stores the key value pairs of the zone."
-        }
-      },
-      "description": "The Create/Update payload of the Subscription.",
-      "title": "Subscription create/update data payload",
-      "required": [
-        "inventoryId",
-        "enterpriseId",
-        "centerId"
-      ]
-    },
-    "centerresourceSubscriptionCreateRequest": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string",
-          "description": "Unique identifier for the user in which Subscription belongs to."
-        },
-        "subscriptions": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/centerresourceSubscription"
-          },
-          "description": "List of the Subscriptions."
-        }
-      }
-    },
-    "centerresourceSubscriptionFilter": {
-      "type": "object",
-      "properties": {
-        "pattern": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/commonKeyValue"
-          },
-          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
-        },
-        "state": {
-          "$ref": "#/definitions/commonState",
-          "description": "State, filters based on the zone state"
-        },
-        "order": {
-          "$ref": "#/definitions/commonOrder",
-          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
-        },
-        "validFrom": {
-          "type": "string",
-          "format": "date-time",
-          "description": "ValidFrom date of the inventory."
-        },
-        "validTo": {
-          "type": "string",
-          "format": "date-time",
-          "description": "ValidTill date of the inventory."
-        }
-      },
-      "description": "SubscriptionFilter request paylod",
-      "title": "SubscriptionFilter payload detail"
-    },
-    "centerresourceSubscriptionListResponse": {
-      "type": "object",
-      "properties": {
-        "subscriptions": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/centerresourceSubscription"
-          },
-          "description": "List of subscriptions."
-        },
-        "cursor": {
-          "$ref": "#/definitions/commonCursor",
-          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
-        }
-      },
-      "description": "Subscription list response details.",
-      "title": "Subscription list response details"
-    },
-    "centerresourceSubscriptionResponse": {
-      "type": "object",
-      "example": {
-        "status": "Subscription created Successfully."
-      },
-      "properties": {
-        "status": {
-          "type": "string",
-          "description": "Status message of the operation."
-        }
-      },
-      "description": "Subscription create/update response details.",
-      "title": "Subscription create/update response details"
-    },
     "commonAddress": {
       "type": "object",
       "properties": {
@@ -761,6 +637,10 @@
           "format": "int32",
           "example": 94101,
           "description": "ZIP or Postal Code"
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact number"
         }
       },
       "description": "An address associated with an enterprise",
@@ -797,6 +677,21 @@
       },
       "description": "Cursor helps in filtering the various list response.",
       "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
     },
     "commonKeyValue": {
       "type": "object",
@@ -874,10 +769,12 @@
         "STATE_CLOSED",
         "STATE_PAUSED",
         "STATE_PENDING",
-        "STATE_EXPIRED"
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
       ],
       "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired."
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "protobufAny": {
       "type": "object",
@@ -906,6 +803,173 @@
           }
         }
       }
+    },
+    "subscriptionSubscription": {
+      "type": "object",
+      "example": {
+        "inventoryId": "{inventoryId}",
+        "enterpriseId": "{enterpriseId}",
+        "startDate": "{startDate}",
+        "endDate": "{endDate}"
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the zone."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "productName": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the zone."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the enterprise in which zone belongs to."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the User in which subscription belongs to."
+        },
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier for the Center in which subscription belongs to."
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start date of the inventory."
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date of the inventory."
+        },
+        "address": {
+          "$ref": "#/definitions/commonAddress",
+          "description": "Address of the User."
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Quantity of the inventory."
+        },
+        "subscriptionPrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Total Subscription amount of the inventory subscribed."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State of the zone."
+        },
+        "origin": {
+          "$ref": "#/definitions/commonOrigin",
+          "description": "User origin details: like created time, update time etc"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the zone."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the zone."
+        }
+      },
+      "description": "The Create/Update payload of the Subscription.",
+      "title": "Subscription create/update data payload",
+      "required": [
+        "inventoryId",
+        "enterpriseId",
+        "centerId"
+      ]
+    },
+    "subscriptionSubscriptionCreateRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the user in which Subscription belongs to."
+        },
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/subscriptionSubscription"
+          },
+          "description": "List of the Subscriptions."
+        }
+      }
+    },
+    "subscriptionSubscriptionFilter": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State, filters based on the zone state"
+        },
+        "order": {
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ValidFrom date of the inventory."
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ValidTill date of the inventory."
+        }
+      },
+      "description": "SubscriptionFilter request paylod",
+      "title": "SubscriptionFilter payload detail"
+    },
+    "subscriptionSubscriptionListResponse": {
+      "type": "object",
+      "properties": {
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/subscriptionSubscription"
+          },
+          "description": "List of subscriptions."
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "Subscription list response details.",
+      "title": "Subscription list response details"
     }
   }
 }

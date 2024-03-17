@@ -4,14 +4,293 @@
     "title": "api/dmsg/iam/authentication.proto",
     "version": "version not set"
   },
+  "tags": [
+    {
+      "name": "Auth"
+    }
+  ],
   "consumes": [
     "application/json"
   ],
   "produces": [
     "application/json"
   ],
-  "paths": {},
+  "paths": {
+    "/api/v1/users/id/{userId}/verify/otp": {
+      "post": {
+        "summary": "Verify user by OTP",
+        "operationId": "Auth_Verify",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "description": "Unique identifier for the User.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "enterpriseName": {
+                  "type": "string",
+                  "description": "enterprise name"
+                },
+                "loginMode": {
+                  "$ref": "#/definitions/commonLoginMode"
+                },
+                "OTP": {
+                  "type": "string"
+                }
+              },
+              "description": "VerifyOTP caries the OTP for user verification",
+              "title": "VerifyOTP caries the OTP for user verification"
+            }
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/users/login": {
+      "post": {
+        "summary": "User login",
+        "operationId": "Auth_Login",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamLoginResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamLoginResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/iamLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "LoginRequest carries the details required for login",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/v1/users/logout": {
+      "post": {
+        "summary": "Logout user",
+        "operationId": "Auth_Logout",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/iamLogoutResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/iamLogoutResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": ".comiammon.LogoutResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "LogoutRequest details",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamLogoutRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    }
+  },
   "definitions": {
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+    },
+    "commonLoginMode": {
+      "type": "string",
+      "enum": [
+        "LOGIN_MODE_UNSPECIFIED",
+        "LOGIN_MODE_EMAIL",
+        "LOGIN_MODE_SMS",
+        "LOGIN_MODE_PASSWORD"
+      ],
+      "default": "LOGIN_MODE_UNSPECIFIED"
+    },
+    "iamEmailBased": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "EmailBased carries email based user details",
+      "title": "EmailBased carries email based user details"
+    },
+    "iamLoginRequest": {
+      "type": "object",
+      "properties": {
+        "enterpriseName": {
+          "type": "string"
+        },
+        "loginMode": {
+          "$ref": "#/definitions/commonLoginMode"
+        },
+        "emailBased": {
+          "$ref": "#/definitions/iamEmailBased"
+        },
+        "smsBased": {
+          "$ref": "#/definitions/iamSMSBased"
+        },
+        "passwordBased": {
+          "$ref": "#/definitions/iamPasswordBased"
+        }
+      },
+      "description": "LoginRequest carries the details required for login",
+      "title": "LoginRequest carries the details required for login"
+    },
+    "iamLoginResponse": {
+      "type": "object",
+      "properties": {
+        "JWTToken": {
+          "type": "string"
+        },
+        "expirationTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "LoginResponse details",
+      "title": "LoginResponse details"
+    },
+    "iamLogoutRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "description": "LogoutRequest details",
+      "title": "LogoutRequest details "
+    },
+    "iamLogoutResponse": {
+      "type": "object",
+      "properties": {
+        "expirationTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "description": "LogoutResponse details",
+      "title": "LogoutResponse details"
+    },
+    "iamPasswordBased": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "description": "PasswordBased carries the username and password details",
+      "title": "PasswordBased carries the username and password details"
+    },
+    "iamSMSBased": {
+      "type": "object",
+      "properties": {
+        "contactNumber": {
+          "type": "string"
+        }
+      },
+      "description": "SMSBased carries sms based user details",
+      "title": "SMSBased carries sms based user details"
+    },
     "protobufAny": {
       "type": "object",
       "properties": {

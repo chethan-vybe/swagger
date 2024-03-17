@@ -645,10 +645,6 @@
                       "type": "boolean",
                       "description": "Can Subscribe tells whether the SKU can be subscribed for the SKU"
                     },
-                    "unit": {
-                      "type": "string",
-                      "description": "Unit of an SKU of a product"
-                    },
                     "discountId": {
                       "type": "string",
                       "description": "Applicable Discount Id for the given SKU "
@@ -988,10 +984,6 @@
         "canSubscribe": {
           "type": "boolean",
           "description": "Can Subscribe tells whether the SKU can be subscribed for the SKU"
-        },
-        "unit": {
-          "type": "string",
-          "description": "Unit of an SKU of a product"
         },
         "discountId": {
           "type": "string",

@@ -1,1382 +1,1484 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "api/dmsg/order/order.proto",
-      "version": "version not set"
-    },
-    "tags": [
-      {
-        "name": "OrderService"
-      }
-    ],
-    "consumes": [
-      "application/json"
-    ],
-    "produces": [
-      "application/json"
-    ],
-    "paths": {
-      "/orders/payments/order/status": {
-        "post": {
-          "summary": "UpdateOrderStatus is used by the payment gateway as a callback: admin API",
-          "operationId": "OrderService_UpdateOrderStatus",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
+  "swagger": "2.0",
+  "info": {
+    "title": "api/dmsg/order/order.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "OrderService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/orders/payments/order/status": {
+      "post": {
+        "summary": "UpdateOrderStatus is used by the payment gateway as a callback: admin API",
+        "operationId": "OrderService_UpdateOrderStatus",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
             }
           },
-          "parameters": [
-            {
-              "name": "body",
-              "description": "PaymentStatusRequest is from the payment gateway for marking the payment status",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/orderPaymentStatusRequest"
-              }
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        }
-      },
-      "/v1/orders/center/{centerId}/user/{userId}": {
-        "get": {
-          "summary": "GetOrders lists the orders of the user: admin API",
-          "operationId": "OrderService_GetOrders",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
             }
           },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "used id is used while fetching the associated orders of the center.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "used id is used while fetching the associated orders of the user.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "filters.orderedFrom",
-              "description": "orderFrom talks the start time of the order",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "name": "filters.orderedTill",
-              "description": "orderTill talks the end time of the order",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "name": "filters.order.orderBy",
-              "description": "Sort by attributes used for sorting based on what field of the enterprise.",
-              "in": "query",
-              "required": false,
-              "type": "string"
-            },
-            {
-              "name": "filters.order.order",
-              "description": "Sort order can be ASCENDING/DESCENDING",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "enum": [
-                "SORT_ORDER_UNSPECIFIED",
-                "SORT_ORDER_ASCENDING",
-                "SORT_ORDER_DESCENDING"
-              ],
-              "default": "SORT_ORDER_UNSPECIFIED"
-            },
-            {
-              "name": "curor.offset",
-              "description": "Page Offset",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.pageNum",
-              "description": "Page Number",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.limit",
-              "description": "Defines the page size/limit",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.totalPages",
-              "description": "Total number of pages to be fetched.",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int64"
-            },
-            {
-              "name": "curor.totalRecords",
-              "description": "Total number of records.",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int64"
-            },
-            {
-              "name": "selectFields",
-              "description": "Fields to select: id, name, description",
-              "in": "query",
-              "required": false,
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "collectionFormat": "multi"
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
             }
-          ],
-          "tags": [
-            "OrderService"
-          ]
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
         },
-        "post": {
-          "summary": "CreateOrder for the given user: admin API",
-          "operationId": "OrderService_CreateOrder",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
+        "parameters": [
+          {
+            "name": "body",
+            "description": "PaymentStatusRequest is from the payment gateway for marking the payment status",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orderPaymentStatusRequest"
             }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "Unique identifier for the Center in which Order belongs to.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "Unique identifier for the Order.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Unique identifier for the Order."
-                  },
-                  "enterpriseId": {
-                    "type": "string",
-                    "description": "Unique identifier for the Enterprise in which Order belongs to."
-                  },
-                  "cartId": {
-                    "type": "string",
-                    "description": "Unique identifier of the cart."
-                  },
-                  "discountId": {
-                    "type": "string",
-                    "description": "Unique identifier for the discount."
-                  },
-                  "type": {
-                    "$ref": "#/definitions/orderOrderType",
-                    "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
-                  },
-                  "items": {
-                    "$ref": "#/definitions/centerresourceItem",
-                    "description": "Detailed info of the cart items."
-                  },
-                  "addressId": {
-                    "type": "string",
-                    "description": "Detailed info of the order items."
-                  },
-                  "orderTotal": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "EmailID of the Order."
-                  },
-                  "state": {
-                    "$ref": "#/definitions/orderOrderState",
-                    "description": "State of the Order."
-                  },
-                  "paymentType": {
-                    "$ref": "#/definitions/orderPaymentType",
-                    "description": "type of the payment."
-                  },
-                  "version": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Version stores the DB version of the Order."
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Tags stores the key value pairs of the Order."
-                  }
-                },
-                "description": "The Create/Update payload of the Order.",
-                "title": "Order create/update data payload",
-                "required": [
-                  "cartId",
-                  "orderTotal"
-                ]
-              }
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        },
-        "put": {
-          "summary": "UpdateOrder of the given user: admin API",
-          "operationId": "OrderService_UpdateOrder",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "Unique identifier for the Center in which Order belongs to.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "Unique identifier for the Order.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Unique identifier for the Order."
-                  },
-                  "enterpriseId": {
-                    "type": "string",
-                    "description": "Unique identifier for the Enterprise in which Order belongs to."
-                  },
-                  "cartId": {
-                    "type": "string",
-                    "description": "Unique identifier of the cart."
-                  },
-                  "discountId": {
-                    "type": "string",
-                    "description": "Unique identifier for the discount."
-                  },
-                  "type": {
-                    "$ref": "#/definitions/orderOrderType",
-                    "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
-                  },
-                  "items": {
-                    "$ref": "#/definitions/centerresourceItem",
-                    "description": "Detailed info of the cart items."
-                  },
-                  "addressId": {
-                    "type": "string",
-                    "description": "Detailed info of the order items."
-                  },
-                  "orderTotal": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "EmailID of the Order."
-                  },
-                  "state": {
-                    "$ref": "#/definitions/orderOrderState",
-                    "description": "State of the Order."
-                  },
-                  "paymentType": {
-                    "$ref": "#/definitions/orderPaymentType",
-                    "description": "type of the payment."
-                  },
-                  "version": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Version stores the DB version of the Order."
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Tags stores the key value pairs of the Order."
-                  }
-                },
-                "description": "The Create/Update payload of the Order.",
-                "title": "Order create/update data payload",
-                "required": [
-                  "cartId",
-                  "orderTotal"
-                ]
-              }
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        }
-      },
-      "/v1/orders/center/{centerId}/user/{userId}/id/{id}": {
-        "get": {
-          "summary": "GetOrder Order of the user: admin API",
-          "operationId": "OrderService_GetOrder",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "Unique Identifier of the center",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "Unique Identifier of the User",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "id",
-              "description": "Unique Identifier of the order",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        }
-      },
-      "/v1/orders/center/{centerId}/user/{userId}/id/{id}/marketplace": {
-        "get": {
-          "summary": "GetOrder Order of the end-user",
-          "operationId": "OrderService_GetOrderMarketPlace",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/orderOrder"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "Unique Identifier of the center",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "Unique Identifier of the User",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "id",
-              "description": "Unique Identifier of the order",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        }
-      },
-      "/v1/orders/center/{centerId}/user/{userId}/marketplace": {
-        "get": {
-          "summary": "ListOrdersMarketPlace lists the orders of the end-user",
-          "operationId": "OrderService_ListOrdersMarketPlace",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/orderOrderListResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "used id is used while fetching the associated orders of the center.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "used id is used while fetching the associated orders of the user.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "filters.orderedFrom",
-              "description": "orderFrom talks the start time of the order",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "name": "filters.orderedTill",
-              "description": "orderTill talks the end time of the order",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "format": "date-time"
-            },
-            {
-              "name": "filters.order.orderBy",
-              "description": "Sort by attributes used for sorting based on what field of the enterprise.",
-              "in": "query",
-              "required": false,
-              "type": "string"
-            },
-            {
-              "name": "filters.order.order",
-              "description": "Sort order can be ASCENDING/DESCENDING",
-              "in": "query",
-              "required": false,
-              "type": "string",
-              "enum": [
-                "SORT_ORDER_UNSPECIFIED",
-                "SORT_ORDER_ASCENDING",
-                "SORT_ORDER_DESCENDING"
-              ],
-              "default": "SORT_ORDER_UNSPECIFIED"
-            },
-            {
-              "name": "curor.offset",
-              "description": "Page Offset",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.pageNum",
-              "description": "Page Number",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.limit",
-              "description": "Defines the page size/limit",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int32"
-            },
-            {
-              "name": "curor.totalPages",
-              "description": "Total number of pages to be fetched.",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int64"
-            },
-            {
-              "name": "curor.totalRecords",
-              "description": "Total number of records.",
-              "in": "query",
-              "required": false,
-              "type": "number",
-              "format": "int64"
-            },
-            {
-              "name": "selectFields",
-              "description": "Fields to select: id, name, description",
-              "in": "query",
-              "required": false,
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "collectionFormat": "multi"
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        },
-        "post": {
-          "summary": "CreateOrder for the given user: admin API",
-          "operationId": "OrderService_CreateOrderMarketplace",
-          "responses": {
-            "200": {
-              "description": "Successful response",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "400": {
-              "description": "Bad Request",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "404": {
-              "description": "Not Found",
-              "schema": {
-                "$ref": "#/definitions/commonDResponse"
-              }
-            },
-            "default": {
-              "description": "An unexpected error response.",
-              "schema": {
-                "$ref": "#/definitions/rpcStatus"
-              }
-            }
-          },
-          "parameters": [
-            {
-              "name": "centerId",
-              "description": "Unique identifier for the Center in which Order belongs to.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "userId",
-              "description": "Unique identifier for the Order.",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "required": true,
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Unique identifier for the Order."
-                  },
-                  "enterpriseId": {
-                    "type": "string",
-                    "description": "Unique identifier for the Enterprise in which Order belongs to."
-                  },
-                  "cartId": {
-                    "type": "string",
-                    "description": "Unique identifier of the cart."
-                  },
-                  "discountId": {
-                    "type": "string",
-                    "description": "Unique identifier for the discount."
-                  },
-                  "type": {
-                    "$ref": "#/definitions/orderOrderType",
-                    "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
-                  },
-                  "items": {
-                    "$ref": "#/definitions/centerresourceItem",
-                    "description": "Detailed info of the cart items."
-                  },
-                  "addressId": {
-                    "type": "string",
-                    "description": "Detailed info of the order items."
-                  },
-                  "orderTotal": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "EmailID of the Order."
-                  },
-                  "state": {
-                    "$ref": "#/definitions/orderOrderState",
-                    "description": "State of the Order."
-                  },
-                  "paymentType": {
-                    "$ref": "#/definitions/orderPaymentType",
-                    "description": "type of the payment."
-                  },
-                  "version": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "Version stores the DB version of the Order."
-                  },
-                  "tags": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    },
-                    "description": "Tags stores the key value pairs of the Order."
-                  }
-                },
-                "description": "The Create/Update payload of the Order.",
-                "title": "Order create/update data payload",
-                "required": [
-                  "cartId",
-                  "orderTotal"
-                ]
-              }
-            }
-          ],
-          "tags": [
-            "OrderService"
-          ]
-        }
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
       }
     },
-    "definitions": {
-      "centerresourceInventoryInfo": {
-        "type": "object",
-        "properties": {
-          "id": {
+    "/v1/orders/center/{centerId}/user/{userId}": {
+      "get": {
+        "summary": "GetOrders lists the orders of the user: admin API",
+        "operationId": "OrderService_GetOrders",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "used id is used while fetching the associated orders of the center.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "used id is used while fetching the associated orders of the user.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filters.orderedFrom",
+            "description": "orderFrom talks the start time of the order",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "description": "Unique identenfier of the Inventory selected"
+            "format": "date-time"
           },
-          "productName": {
+          {
+            "name": "filters.orderedTill",
+            "description": "orderTill talks the end time of the order",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "description": "Name of the product"
+            "format": "date-time"
           },
-          "skuLabel": {
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
             "type": "string",
-            "description": "Label/Name for the SKU item"
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "description": "quantity of the items"
-          },
-          "basePrice": {
+          {
+            "name": "curor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
             "type": "number",
-            "format": "float",
-            "description": "Base price of the item"
-          }
-        },
-        "description": "InventoryInfo carries the various inventory related meta data.",
-        "title": "InventoryInfo carries the various inventory related meta data."
-      },
-      "centerresourceItem": {
-        "type": "object",
-        "properties": {
-          "inventories": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/centerresourceInventoryInfo"
-            },
-            "description": "List of inventories added to the cart"
-          },
-          "subscriptions": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/subscriptionSubscription"
-            },
-            "description": "list of subscription added to the cart"
-          }
-        },
-        "description": "Cart Items holds the inventory and subscription informations",
-        "title": "Cart Items holds the inventory and subscription informations"
-      },
-      "commonAddress": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name in the address"
-          },
-          "street": {
-            "type": "string",
-            "description": "Address Line 1 for Street, buiding/flat details etc"
-          },
-          "area": {
-            "type": "string",
-            "description": "Address Line 2 for village/sector"
-          },
-          "locality": {
-            "type": "string",
-            "description": "Nearest locality of the address within the given pincode."
-          },
-          "city": {
-            "type": "string",
-            "description": "City"
-          },
-          "state": {
-            "type": "string",
-            "description": "State or Province"
-          },
-          "pincode": {
-            "type": "integer",
-            "format": "int32",
-            "example": 94101,
-            "description": "ZIP or Postal Code"
-          },
-          "contactNumber": {
-            "type": "string",
-            "description": "Contact number"
-          }
-        },
-        "description": "An address associated with an enterprise",
-        "title": "Address object"
-      },
-      "commonCursor": {
-        "type": "object",
-        "properties": {
-          "offset": {
-            "type": "number",
-            "format": "int32",
-            "description": "Page Offset"
-          },
-          "pageNum": {
-            "type": "number",
-            "format": "int32",
-            "description": "Page Number"
-          },
-          "limit": {
-            "type": "number",
-            "format": "int32",
-            "description": "Defines the page size/limit"
-          },
-          "totalPages": {
-            "type": "number",
-            "format": "int64",
-            "description": "Total number of pages to be fetched."
-          },
-          "totalRecords": {
-            "type": "number",
-            "format": "int64",
-            "description": "Total number of records."
-          }
-        },
-        "description": "Cursor helps in filtering the various list response.",
-        "title": "Cursor is used as filter in list operation."
-      },
-      "commonDResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique Identifier of the Object Created/Updated."
-          },
-          "status": {
-            "type": "string",
-            "description": "Status message for the Operation."
-          }
-        },
-        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-        "title": "DResponse object holds the return object on CREATE abd UPDATE request"
-      },
-      "commonKeyValue": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string",
-            "description": "Key of the attribute."
-          },
-          "value": {
-            "type": "string",
-            "description": "Value of the attribute assoiacteed wwith the key."
-          }
-        },
-        "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
-        "title": "KeyValue is used to store the key value information.",
-        "required": [
-          "key",
-          "value"
-        ]
-      },
-      "commonOrder": {
-        "type": "object",
-        "properties": {
-          "orderBy": {
-            "type": "string",
-            "description": "Sort by attributes used for sorting based on what field of the enterprise."
-          },
-          "order": {
-            "$ref": "#/definitions/commonSortOrder",
-            "description": "Sort order can be ASCENDING/DESCENDING"
-          }
-        }
-      },
-      "commonOrigin": {
-        "type": "object",
-        "properties": {
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "User data: Created time"
-          },
-          "createdBy": {
-            "type": "string",
-            "description": "User data: Created By"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "The time when the record was last updated."
-          },
-          "updatedBy": {
-            "type": "string",
-            "description": "User data: Updated By"
-          }
-        },
-        "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-        "title": "Origin object"
-      },
-      "commonSortOrder": {
-        "type": "string",
-        "enum": [
-          "SORT_ORDER_UNSPECIFIED",
-          "SORT_ORDER_ASCENDING",
-          "SORT_ORDER_DESCENDING"
-        ],
-        "default": "SORT_ORDER_UNSPECIFIED"
-      },
-      "commonState": {
-        "type": "string",
-        "enum": [
-          "STATE_UNSPECIFIED",
-          "STATE_CREATED",
-          "STATE_ACTIVE",
-          "STATE_SUSPENDED",
-          "STATE_CLOSED",
-          "STATE_PAUSED",
-          "STATE_PENDING",
-          "STATE_EXPIRED",
-          "STATE_FAILED",
-          "STATE_COMPLETE"
-        ],
-        "default": "STATE_UNSPECIFIED",
-        "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
-      },
-      "orderOrder": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique identifier for the Order."
-          },
-          "enterpriseId": {
-            "type": "string",
-            "description": "Unique identifier for the Enterprise in which Order belongs to."
-          },
-          "cartId": {
-            "type": "string",
-            "description": "Unique identifier of the cart."
-          },
-          "userId": {
-            "type": "string",
-            "description": "Unique identifier for the Order."
-          },
-          "centerId": {
-            "type": "string",
-            "description": "Unique identifier for the Center in which Order belongs to."
-          },
-          "discountId": {
-            "type": "string",
-            "description": "Unique identifier for the discount."
-          },
-          "type": {
-            "$ref": "#/definitions/orderOrderType",
-            "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
-          },
-          "items": {
-            "$ref": "#/definitions/centerresourceItem",
-            "description": "Detailed info of the cart items."
-          },
-          "addressId": {
-            "type": "string",
-            "description": "Detailed info of the order items."
-          },
-          "orderTotal": {
-            "type": "number",
-            "format": "float",
-            "description": "EmailID of the Order."
-          },
-          "state": {
-            "$ref": "#/definitions/orderOrderState",
-            "description": "State of the Order."
-          },
-          "paymentType": {
-            "$ref": "#/definitions/orderPaymentType",
-            "description": "type of the payment."
-          },
-          "version": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Version stores the DB version of the Order."
-          },
-          "tags": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            },
-            "description": "Tags stores the key value pairs of the Order."
-          }
-        },
-        "description": "The Create/Update payload of the Order.",
-        "title": "Order create/update data payload",
-        "required": [
-          "cartId",
-          "centerId",
-          "userId",
-          "orderTotal"
-        ]
-      },
-      "orderOrderFilter": {
-        "type": "object",
-        "properties": {
-          "orderedFrom": {
-            "type": "string",
-            "format": "date-time",
-            "description": "orderFrom talks the start time of the order"
-          },
-          "orderedTill": {
-            "type": "string",
-            "format": "date-time",
-            "description": "orderTill talks the end time of the order"
-          },
-          "pattern": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/commonKeyValue"
-            },
-            "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
-          },
-          "order": {
-            "$ref": "#/definitions/commonOrder",
-            "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
-          }
-        },
-        "description": "OrderFilter request paylod used list the orders with the various filters like state, name etc.",
-        "title": "OrderFilter payload detail"
-      },
-      "orderOrderListResponse": {
-        "type": "object",
-        "properties": {
-          "orders": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "$ref": "#/definitions/orderOrder"
-            },
-            "description": "List of orders."
-          },
-          "cursor": {
-            "$ref": "#/definitions/commonCursor",
-            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
-          }
-        },
-        "description": "OrderListResponse list response details.",
-        "title": "OrderListResponse list response details"
-      },
-      "orderOrderState": {
-        "type": "string",
-        "enum": [
-          "Order_STATE_UNSPECIFIED",
-          "Order_STATE_CREATED",
-          "Order_STATE_INPROGRESS",
-          "Order_STATE_FAILED",
-          "Order_STATE_COMPLETED",
-          "Order_STATE_DELIVERED",
-          "Order_STATE_PENDING",
-          "Order_STATE_PROCESSING"
-        ],
-        "default": "Order_STATE_UNSPECIFIED"
-      },
-      "orderOrderType": {
-        "type": "string",
-        "enum": [
-          "Order_TYPE_UNSPECIFIED",
-          "Order_TYPE_USER",
-          "Order_TYPE_SYSTEM"
-        ],
-        "default": "Order_TYPE_UNSPECIFIED"
-      },
-      "orderPaymentInstrument": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string"
-          },
-          "utr": {
-            "type": "string"
-          },
-          "intentUrl": {
-            "type": "string"
-          },
-          "redirectInfo": {
-            "$ref": "#/definitions/orderRedirectInfo"
-          }
-        },
-        "description": "PaymentInstrument details talks about payment method of the user.",
-        "title": "PaymentInstrument details"
-      },
-      "orderPaymentStatus": {
-        "type": "object",
-        "properties": {
-          "merchantId": {
-            "type": "string"
-          },
-          "merchantTransactionId": {
-            "type": "string"
-          },
-          "transactionId": {
-            "type": "string"
-          },
-          "amount": {
-            "type": "number",
-            "format": "float"
-          },
-          "state": {
-            "type": "string"
-          },
-          "responseCode": {
-            "type": "string"
-          },
-          "paymentInstrument": {
-            "$ref": "#/definitions/orderPaymentInstrument"
-          }
-        }
-      },
-      "orderPaymentStatusRequest": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "code": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "$ref": "#/definitions/orderPaymentStatus"
-          }
-        },
-        "description": "PaymentStatusRequest is from the payment gateway for marking the payment status",
-        "title": "PaymentStatusRequest details"
-      },
-      "orderPaymentType": {
-        "type": "string",
-        "enum": [
-          "PAYMENT_TYPE_UNSPECIFIED",
-          "PAYMENT_TYPE_PAY_NOW",
-          "PAYMENT_TYPE_COD"
-        ],
-        "default": "PAYMENT_TYPE_UNSPECIFIED"
-      },
-      "orderRedirectInfo": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string"
-          },
-          "method": {
-            "type": "string"
-          }
-        }
-      },
-      "protobufAny": {
-        "type": "object",
-        "properties": {
-          "@type": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": {}
-      },
-      "rpcStatus": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
             "format": "int32"
           },
-          "message": {
-            "type": "string"
+          {
+            "name": "curor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
           },
-          "details": {
+          {
+            "name": "curor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "curor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
             "type": "array",
             "items": {
-              "type": "object",
-              "$ref": "#/definitions/protobufAny"
-            }
-          }
-        }
-      },
-      "subscriptionSubscription": {
-        "type": "object",
-        "example": {
-          "inventoryId": "{inventoryId}",
-          "enterpriseId": "{enterpriseId}",
-          "startDate": "{startDate}",
-          "endDate": "{endDate}"
-        },
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique identifier for the zone."
-          },
-          "inventoryId": {
-            "type": "string",
-            "description": "Unique Identifier of the Inventory."
-          },
-          "description": {
-            "type": "string",
-            "description": "Description for the zone."
-          },
-          "enterpriseId": {
-            "type": "string",
-            "description": "Unique identifier for the enterprise in which zone belongs to."
-          },
-          "userId": {
-            "type": "string",
-            "description": "Unique identifier for the User in which subscription belongs to."
-          },
-          "centerId": {
-            "type": "string",
-            "description": "Unique identifier for the Center in which subscription belongs to."
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Start date of the inventory."
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time",
-            "description": "End date of the inventory."
-          },
-          "address": {
-            "$ref": "#/definitions/commonAddress",
-            "description": "Address of the User."
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Quantity of the inventory."
-          },
-          "subscriptionPrice": {
-            "type": "number",
-            "format": "float",
-            "description": "Total Subscription amount of the inventory subscribed."
-          },
-          "state": {
-            "$ref": "#/definitions/commonState",
-            "description": "State of the zone."
-          },
-          "origin": {
-            "$ref": "#/definitions/commonOrigin",
-            "description": "User origin details: like created time, update time etc"
-          },
-          "version": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Version stores the DB version of the zone."
-          },
-          "tags": {
-            "type": "object",
-            "additionalProperties": {
               "type": "string"
             },
-            "description": "Tags stores the key value pairs of the zone."
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      },
+      "post": {
+        "summary": "CreateOrder for the given user: admin API",
+        "operationId": "OrderService_CreateAdminOrder",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
-        "description": "The Create/Update payload of the Subscription.",
-        "title": "Subscription create/update data payload",
-        "required": [
-          "inventoryId",
-          "enterpriseId",
-          "centerId"
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique identenfier of the product selected",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique identifier for the Order.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "addressId": {
+                  "type": "string",
+                  "description": "Detailed info of the order items."
+                },
+                "items": {
+                  "$ref": "#/definitions/centerresourceInvRequestByAdmin",
+                  "description": "Detailed info of the cart items."
+                },
+                "discountId": {
+                  "type": "string",
+                  "description": "Unique identifier for the discount."
+                }
+              },
+              "description": "The AdminOrderRequest payload of the Order.",
+              "title": "AdminOrderRequest create/update data payload",
+              "required": [
+                "addressId",
+                "items"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      },
+      "put": {
+        "summary": "UpdateOrder of the given user: admin API",
+        "operationId": "OrderService_UpdateOrder",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique identifier for the Center in which Order belongs to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique identifier for the Order.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique identifier for the Order."
+                },
+                "enterpriseId": {
+                  "type": "string",
+                  "description": "Unique identifier for the Enterprise in which Order belongs to."
+                },
+                "cartId": {
+                  "type": "string",
+                  "description": "Unique identifier of the cart."
+                },
+                "discountId": {
+                  "type": "string",
+                  "description": "Unique identifier for the discount."
+                },
+                "type": {
+                  "$ref": "#/definitions/orderOrderType",
+                  "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
+                },
+                "items": {
+                  "$ref": "#/definitions/centerresourceItem",
+                  "description": "Detailed info of the cart items."
+                },
+                "addressId": {
+                  "type": "string",
+                  "description": "Detailed info of the order items."
+                },
+                "orderTotal": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "EmailID of the Order."
+                },
+                "state": {
+                  "$ref": "#/definitions/orderOrderState",
+                  "description": "State of the Order."
+                },
+                "paymentType": {
+                  "$ref": "#/definitions/orderPaymentType",
+                  "description": "type of the payment."
+                },
+                "version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version stores the DB version of the Order."
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags stores the key value pairs of the Order."
+                }
+              },
+              "description": "The Create/Update payload of the Order.",
+              "title": "Order create/update data payload",
+              "required": [
+                "cartId",
+                "orderTotal"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      }
+    },
+    "/v1/orders/center/{centerId}/user/{userId}/id/{id}": {
+      "get": {
+        "summary": "GetOrder Order of the user: admin API",
+        "operationId": "OrderService_GetOrder",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the center",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique Identifier of the User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique Identifier of the order",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      },
+      "delete": {
+        "summary": "DeleteOrder Order of the user: admin API",
+        "operationId": "OrderService_DeleteOrder",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the center",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique Identifier of the User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique Identifier of the order",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      }
+    },
+    "/v1/orders/center/{centerId}/user/{userId}/id/{id}/marketplace": {
+      "get": {
+        "summary": "GetOrder Order of the end-user",
+        "operationId": "OrderService_GetOrderMarketPlace",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/orderOrder"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the center",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique Identifier of the User",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique Identifier of the order",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      }
+    },
+    "/v1/orders/center/{centerId}/user/{userId}/marketplace": {
+      "get": {
+        "summary": "ListOrdersMarketPlace lists the orders of the end-user",
+        "operationId": "OrderService_ListOrdersMarketPlace",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/orderOrderListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "used id is used while fetching the associated orders of the center.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "used id is used while fetching the associated orders of the user.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filters.orderedFrom",
+            "description": "orderFrom talks the start time of the order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.orderedTill",
+            "description": "orderTill talks the end time of the order",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
+          },
+          {
+            "name": "curor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "curor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "OrderService"
+        ]
+      },
+      "post": {
+        "summary": "CreateOrder for the given user: admin API",
+        "operationId": "OrderService_CreateOrderMarketplace",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique identifier for the Center in which Order belongs to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "description": "Unique identifier for the Order.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique identifier for the Order."
+                },
+                "enterpriseId": {
+                  "type": "string",
+                  "description": "Unique identifier for the Enterprise in which Order belongs to."
+                },
+                "cartId": {
+                  "type": "string",
+                  "description": "Unique identifier of the cart."
+                },
+                "discountId": {
+                  "type": "string",
+                  "description": "Unique identifier for the discount."
+                },
+                "type": {
+                  "$ref": "#/definitions/orderOrderType",
+                  "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
+                },
+                "items": {
+                  "$ref": "#/definitions/centerresourceItem",
+                  "description": "Detailed info of the cart items."
+                },
+                "addressId": {
+                  "type": "string",
+                  "description": "Detailed info of the order items."
+                },
+                "orderTotal": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "EmailID of the Order."
+                },
+                "state": {
+                  "$ref": "#/definitions/orderOrderState",
+                  "description": "State of the Order."
+                },
+                "paymentType": {
+                  "$ref": "#/definitions/orderPaymentType",
+                  "description": "type of the payment."
+                },
+                "version": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "Version stores the DB version of the Order."
+                },
+                "tags": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Tags stores the key value pairs of the Order."
+                }
+              },
+              "description": "The Create/Update payload of the Order.",
+              "title": "Order create/update data payload",
+              "required": [
+                "cartId",
+                "orderTotal"
+              ]
+            }
+          }
+        ],
+        "tags": [
+          "OrderService"
         ]
       }
     }
+  },
+  "definitions": {
+    "centerresourceInvRequestByAdmin": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Unique identenfier of the product selected"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product"
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique identenfier of the sku selected"
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Label/Name for the SKU item"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the items"
+        },
+        "basePrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Base price of the item"
+        },
+        "isSubscribed": {
+          "type": "boolean",
+          "description": "Base price of the item"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start date of the inventory."
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date of the inventory."
+        }
+      },
+      "description": "InvRequestByAdmin carries the various inventory and subscription related meta data.",
+      "title": "InvRequestByAdmin carries the various inventory and subscription related meta data."
+    },
+    "centerresourceInventoryInfo": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Unique identenfier of the product selected"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product"
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique identenfier of the sku selected"
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Label/Name for the SKU item"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the items"
+        },
+        "basePrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Base price of the item"
+        },
+        "invRef": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceInventoryQuantityRef"
+          },
+          "description": "List of inventories added to the cart"
+        }
+      },
+      "description": "InventoryInfo carries the various inventory related meta data.",
+      "title": "InventoryInfo carries the various inventory related meta data."
+    },
+    "centerresourceInventoryQuantityRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identenfier of the inventory"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantityUnits that was blocked."
+        }
+      },
+      "description": "InventoryQuantityRef carries the InventoryId and quantity that was blocked.",
+      "title": "InventoryQuantityRef carries the InventoryId and quantity that was blocked."
+    },
+    "centerresourceItem": {
+      "type": "object",
+      "properties": {
+        "inventories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceInventoryInfo"
+          },
+          "description": "List of inventories added to the cart"
+        },
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/subscriptionSubscription"
+          },
+          "description": "list of subscription added to the cart"
+        }
+      },
+      "description": "Cart Items holds the inventory and subscription informations",
+      "title": "Cart Items holds the inventory and subscription informations"
+    },
+    "commonAddress": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name in the address"
+        },
+        "street": {
+          "type": "string",
+          "description": "Address Line 1 for Street, buiding/flat details etc"
+        },
+        "area": {
+          "type": "string",
+          "description": "Address Line 2 for village/sector"
+        },
+        "locality": {
+          "type": "string",
+          "description": "Nearest locality of the address within the given pincode."
+        },
+        "city": {
+          "type": "string",
+          "description": "City"
+        },
+        "state": {
+          "type": "string",
+          "description": "State or Province"
+        },
+        "pincode": {
+          "type": "integer",
+          "format": "int32",
+          "example": 94101,
+          "description": "ZIP or Postal Code"
+        },
+        "contactNumber": {
+          "type": "string",
+          "description": "Contact number"
+        }
+      },
+      "description": "An address associated with an enterprise",
+      "title": "Address object"
+    },
+    "commonCursor": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Offset"
+        },
+        "pageNum": {
+          "type": "number",
+          "format": "int32",
+          "description": "Page Number"
+        },
+        "limit": {
+          "type": "number",
+          "format": "int32",
+          "description": "Defines the page size/limit"
+        },
+        "totalPages": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of pages to be fetched."
+        },
+        "totalRecords": {
+          "type": "number",
+          "format": "int64",
+          "description": "Total number of records."
+        }
+      },
+      "description": "Cursor helps in filtering the various list response.",
+      "title": "Cursor is used as filter in list operation."
+    },
+    "commonDResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique Identifier of the Object Created/Updated."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status message for the Operation."
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+    },
+    "commonKeyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Key of the attribute."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the attribute assoiacteed wwith the key."
+        }
+      },
+      "description": "KeyValue is used to store the key value information, which can used for selection crieteria.",
+      "title": "KeyValue is used to store the key value information.",
+      "required": [
+        "key",
+        "value"
+      ]
+    },
+    "commonOrder": {
+      "type": "object",
+      "properties": {
+        "orderBy": {
+          "type": "string",
+          "description": "Sort by attributes used for sorting based on what field of the enterprise."
+        },
+        "order": {
+          "$ref": "#/definitions/commonSortOrder",
+          "description": "Sort order can be ASCENDING/DESCENDING"
+        }
+      }
+    },
+    "commonOrigin": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "User data: Created time"
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "User data: Created By"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The time when the record was last updated."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "User data: Updated By"
+        }
+      },
+      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
+      "title": "Origin object"
+    },
+    "commonSortOrder": {
+      "type": "string",
+      "enum": [
+        "SORT_ORDER_UNSPECIFIED",
+        "SORT_ORDER_ASCENDING",
+        "SORT_ORDER_DESCENDING"
+      ],
+      "default": "SORT_ORDER_UNSPECIFIED"
+    },
+    "commonState": {
+      "type": "string",
+      "enum": [
+        "STATE_UNSPECIFIED",
+        "STATE_CREATED",
+        "STATE_ACTIVE",
+        "STATE_SUSPENDED",
+        "STATE_CLOSED",
+        "STATE_PAUSED",
+        "STATE_PENDING",
+        "STATE_EXPIRED",
+        "STATE_FAILED",
+        "STATE_COMPLETE"
+      ],
+      "default": "STATE_UNSPECIFIED",
+      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
+    },
+    "orderOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Order."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the Enterprise in which Order belongs to."
+        },
+        "cartId": {
+          "type": "string",
+          "description": "Unique identifier of the cart."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the Order."
+        },
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier for the Center in which Order belongs to."
+        },
+        "discountId": {
+          "type": "string",
+          "description": "Unique identifier for the discount."
+        },
+        "type": {
+          "$ref": "#/definitions/orderOrderType",
+          "description": "Tpe of the Order, could be FARM/DISTRIBUTOR etc."
+        },
+        "items": {
+          "$ref": "#/definitions/centerresourceItem",
+          "description": "Detailed info of the cart items."
+        },
+        "addressId": {
+          "type": "string",
+          "description": "Detailed info of the order items."
+        },
+        "orderTotal": {
+          "type": "number",
+          "format": "float",
+          "description": "EmailID of the Order."
+        },
+        "state": {
+          "$ref": "#/definitions/orderOrderState",
+          "description": "State of the Order."
+        },
+        "paymentType": {
+          "$ref": "#/definitions/orderPaymentType",
+          "description": "type of the payment."
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the Order."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the Order."
+        }
+      },
+      "description": "The Create/Update payload of the Order.",
+      "title": "Order create/update data payload",
+      "required": [
+        "cartId",
+        "centerId",
+        "userId",
+        "orderTotal"
+      ]
+    },
+    "orderOrderFilter": {
+      "type": "object",
+      "properties": {
+        "orderedFrom": {
+          "type": "string",
+          "format": "date-time",
+          "description": "orderFrom talks the start time of the order"
+        },
+        "orderedTill": {
+          "type": "string",
+          "format": "date-time",
+          "description": "orderTill talks the end time of the order"
+        },
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+        },
+        "order": {
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        }
+      },
+      "description": "OrderFilter request paylod used list the orders with the various filters like state, name etc.",
+      "title": "OrderFilter payload detail"
+    },
+    "orderOrderListResponse": {
+      "type": "object",
+      "properties": {
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/orderOrder"
+          },
+          "description": "List of orders."
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "OrderListResponse list response details.",
+      "title": "OrderListResponse list response details"
+    },
+    "orderOrderState": {
+      "type": "string",
+      "enum": [
+        "Order_STATE_UNSPECIFIED",
+        "Order_STATE_CREATED",
+        "Order_STATE_INPROGRESS",
+        "Order_STATE_FAILED",
+        "Order_STATE_COMPLETED",
+        "Order_STATE_DELIVERED",
+        "Order_STATE_PENDING",
+        "Order_STATE_PROCESSING"
+      ],
+      "default": "Order_STATE_UNSPECIFIED"
+    },
+    "orderOrderType": {
+      "type": "string",
+      "enum": [
+        "Order_TYPE_UNSPECIFIED",
+        "Order_TYPE_END_USER",
+        "Order_TYPE_SYSTEM",
+        "Order_TYPE_ADMIN"
+      ],
+      "default": "Order_TYPE_UNSPECIFIED"
+    },
+    "orderPaymentInstrument": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "utr": {
+          "type": "string"
+        },
+        "intentUrl": {
+          "type": "string"
+        },
+        "redirectInfo": {
+          "$ref": "#/definitions/orderRedirectInfo"
+        }
+      },
+      "description": "PaymentInstrument details talks about payment method of the user.",
+      "title": "PaymentInstrument details"
+    },
+    "orderPaymentStatus": {
+      "type": "object",
+      "properties": {
+        "merchantId": {
+          "type": "string"
+        },
+        "merchantTransactionId": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "float"
+        },
+        "state": {
+          "type": "string"
+        },
+        "responseCode": {
+          "type": "string"
+        },
+        "paymentInstrument": {
+          "$ref": "#/definitions/orderPaymentInstrument"
+        }
+      }
+    },
+    "orderPaymentStatusRequest": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/orderPaymentStatus"
+        }
+      },
+      "description": "PaymentStatusRequest is from the payment gateway for marking the payment status",
+      "title": "PaymentStatusRequest details"
+    },
+    "orderPaymentType": {
+      "type": "string",
+      "enum": [
+        "PAYMENT_TYPE_UNSPECIFIED",
+        "PAYMENT_TYPE_PAY_NOW",
+        "PAYMENT_TYPE_COD"
+      ],
+      "default": "PAYMENT_TYPE_UNSPECIFIED"
+    },
+    "orderRedirectInfo": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "subscriptionSubscription": {
+      "type": "object",
+      "example": {
+        "inventoryId": "{inventoryId}",
+        "enterpriseId": "{enterpriseId}",
+        "startDate": "{startDate}",
+        "endDate": "{endDate}"
+      },
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the zone."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "productName": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Unique Identifier of the product."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the zone."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the enterprise in which zone belongs to."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier for the User in which subscription belongs to."
+        },
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier for the Center in which subscription belongs to."
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start date of the inventory."
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End date of the inventory."
+        },
+        "address": {
+          "$ref": "#/definitions/commonAddress",
+          "description": "Address of the User."
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Quantity of the inventory."
+        },
+        "subscriptionPrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Total Subscription amount of the inventory subscribed."
+        },
+        "state": {
+          "$ref": "#/definitions/commonState",
+          "description": "State of the zone."
+        },
+        "origin": {
+          "$ref": "#/definitions/commonOrigin",
+          "description": "User origin details: like created time, update time etc"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Version stores the DB version of the zone."
+        },
+        "tags": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Tags stores the key value pairs of the zone."
+        }
+      },
+      "description": "The Create/Update payload of the Subscription.",
+      "title": "Subscription create/update data payload",
+      "required": [
+        "inventoryId",
+        "enterpriseId",
+        "centerId"
+      ]
+    }
   }
-  
+}

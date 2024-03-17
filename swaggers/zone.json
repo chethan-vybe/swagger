@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "api/dmsg/centerresource/zone.proto",
+    "title": "api/dmsg/centerresource/inventory.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "ZoneService"
+      "name": "InventoryService"
     }
   ],
   "consumes": [
@@ -16,21 +16,21 @@
     "application/json"
   ],
   "paths": {
-    "/v1/zones": {
+    "/v1/inventories/centers/{centerId}": {
       "get": {
-        "summary": "List Zone",
-        "operationId": "ZoneService_List",
+        "summary": "List Inventories",
+        "operationId": "InventoryService_ListInventory",
         "responses": {
           "200": {
-            "description": "Successful response of zone list",
+            "description": "Successful response of inventory list",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneListResponse"
+              "$ref": "#/definitions/centerresourceInventoryListResponse"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceZoneListResponse"
+              "$ref": "#/definitions/centerresourceInventoryListResponse"
             }
           },
           "default": {
@@ -42,18 +42,124 @@
         },
         "parameters": [
           {
-            "name": "filters",
-            "description": "Zone filter",
-            "in": "query",
-            "required": false,
-            "type": "object"
+            "name": "centerId",
+            "description": "This center id is used while fetching the associated inventories.",
+            "in": "path",
+            "required": true,
+            "type": "string"
           },
           {
-            "name": "cursor",
-            "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records.",
+            "name": "filters.productId",
+            "description": "Unique identifier for the product.",
             "in": "query",
             "required": false,
-            "type": "object"
+            "type": "string"
+          },
+          {
+            "name": "filters.skuId",
+            "description": "Unique identifier for the sku.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.batchNumber",
+            "description": "Unique batch number of the inventory",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.mfgDateFrom",
+            "description": "Manufacturing date of the inventory.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.mfgDateTo",
+            "description": "Manufacturing date of the inventory.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.expiryFrom",
+            "description": "Expiry date of the inventory.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.expiryTo",
+            "description": "Expiry date of the inventory.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
+          },
+          {
+            "name": "curor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "curor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
           },
           {
             "name": "selectFields",
@@ -68,12 +174,12 @@
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
       },
       "post": {
-        "summary": "Create Zone",
-        "operationId": "ZoneService_Create",
+        "summary": "Create Inventory",
+        "operationId": "InventoryService_Create",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -102,41 +208,58 @@
         },
         "parameters": [
           {
+            "name": "centerId",
+            "description": "Unique identifier for the center in which inventory belongs to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "body",
-            "description": "The Create/Update payload of the Zone.",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "type": "object",
+              "properties": {
+                "inventories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/centerresourceInventory"
+                  },
+                  "description": "List of the Inventories."
+                }
+              },
+              "title": "used by the create inventories API request"
             }
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
       }
     },
-    "/v1/zones/{id}": {
-      "get": {
-        "summary": "GetById Zone",
-        "operationId": "ZoneService_GetById",
+    "/v1/inventories/centers/{centerId}/block": {
+      "put": {
+        "summary": "block Inventory --\u003e INTERNAL API to block the inventory while processing order to block the inventory",
+        "operationId": "InventoryService_Block",
         "responses": {
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": ".centerresource.InventoryQuantityRefList"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": ".centerresource.InventoryQuantityRefList"
             }
           },
           "404": {
             "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": ".centerresource.InventoryQuantityRefList"
             }
           },
           "default": {
@@ -148,37 +271,384 @@
         },
         "parameters": [
           {
-            "name": "id",
-            "description": "Unique Identifier of the Zone",
+            "name": "centerId",
+            "description": "Unique identenfier of the center selected",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inventories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/centerresourceInventoryInfo"
+                  },
+                  "description": "List of inventories added to the cart"
+                }
+              },
+              "title": "InventoryInfoList is used by the internal API for blocking anf unblocking the inventories while procesing the order"
+            }
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
-      },
-      "delete": {
-        "summary": "Delete Zone",
-        "operationId": "ZoneService_Delete",
+      }
+    },
+    "/v1/inventories/centers/{centerId}/product/{productId}": {
+      "get": {
+        "summary": "Fetch stock details of the specified product",
+        "operationId": "InventoryService_GetProductInventoryStock",
         "responses": {
           "200": {
-            "description": "Successful deleted the zone resource",
+            "description": "Successful response of product inventory stock",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": "#/definitions/centerresourceProductSkuStockInfo"
             }
           },
           "400": {
-            "description": "Invalid data, Bad Request",
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": "#/definitions/centerresourceProductSkuStockInfo"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the Center in which Inventory belongs to.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "productId",
+            "description": "Unique Identifier of the product",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/v1/inventories/centers/{centerId}/products": {
+      "get": {
+        "summary": "List Inventories by Products",
+        "operationId": "InventoryService_ListInventoryByProduct",
+        "responses": {
+          "200": {
+            "description": "Successful response of inventory list",
+            "schema": {
+              "$ref": "#/definitions/centerresourceProductInventoryStockListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/centerresourceProductInventoryStockListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "This center id is used while fetching the associated inventories.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
+          },
+          {
+            "name": "curor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "curor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/v1/inventories/centers/{centerId}/products/skus": {
+      "get": {
+        "summary": "List Inventories by Products and skus",
+        "operationId": "InventoryService_ListInventoryByProductSku",
+        "responses": {
+          "200": {
+            "description": "Successful response of inventory list",
+            "schema": {
+              "$ref": "#/definitions/centerresourceProductSkuInventoryStockListResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/centerresourceProductSkuInventoryStockListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "This center id is used while fetching the associated inventories.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.orderBy",
+            "description": "Sort by attributes used for sorting based on what field of the enterprise.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filters.order.order",
+            "description": "Sort order can be ASCENDING/DESCENDING",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "SORT_ORDER_UNSPECIFIED",
+              "SORT_ORDER_ASCENDING",
+              "SORT_ORDER_DESCENDING"
+            ],
+            "default": "SORT_ORDER_UNSPECIFIED"
+          },
+          {
+            "name": "curor.offset",
+            "description": "Page Offset",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.pageNum",
+            "description": "Page Number",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.limit",
+            "description": "Defines the page size/limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int32"
+          },
+          {
+            "name": "curor.totalPages",
+            "description": "Total number of pages to be fetched.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "curor.totalRecords",
+            "description": "Total number of records.",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "int64"
+          },
+          {
+            "name": "selectFields",
+            "description": "Fields to select: id, name, description",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/v1/inventories/centers/{centerId}/unblock": {
+      "put": {
+        "summary": "unblock Inventory --\u003e INTERNAL API to block the inventory while processing order to unblock the inventory",
+        "operationId": "InventoryService_Unblock",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "404": {
-            "description": "Zone Not Found",
+            "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/centerresourceZone"
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "centerId",
+            "description": "Unique identenfier of the center selected",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "inventories": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/centerresourceInventoryInfo"
+                  },
+                  "description": "List of inventories added to the cart"
+                }
+              },
+              "title": "InventoryInfoList is used by the internal API for blocking anf unblocking the inventories while procesing the order"
+            }
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/v1/inventories/id/{id}/centers/{centerId}": {
+      "get": {
+        "summary": "GetById Inventory",
+        "operationId": "InventoryService_GetById",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/centerresourceInventory"
             }
           },
           "default": {
@@ -191,19 +661,26 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Unique Identifier of the Zone",
+            "description": "Unique Identifier of the Inventory",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the Center in which Inventory belongs to.",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
       },
       "put": {
-        "summary": "Update Zone",
-        "operationId": "ZoneService_Update",
+        "summary": "Update Inventory",
+        "operationId": "InventoryService_Update",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -233,7 +710,14 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Unique identifier for the zone.",
+            "description": "Unique identifier of the Inventory.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "centerId",
+            "description": "Unique identifier for the Center in which inventory belongs to.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -245,87 +729,113 @@
             "schema": {
               "type": "object",
               "example": {
-                "name": "dummy",
+                "skuid": "{skuId}",
                 "enterpriseId": "{enterpriseId}",
-                "centerId": "{centerId}"
+                "basePrice": "100"
               },
               "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Name of the zone."
-                },
                 "description": {
                   "type": "string",
-                  "description": "Description for the zone."
+                  "description": "Description for the Inventory."
+                },
+                "productId": {
+                  "type": "string",
+                  "description": "Unique identifier for the product."
+                },
+                "productName": {
+                  "type": "string",
+                  "description": "Name of the product."
+                },
+                "skuId": {
+                  "type": "string",
+                  "description": "Unique identifier for the sku."
+                },
+                "skuName": {
+                  "type": "string",
+                  "description": "Name of the sku."
                 },
                 "enterpriseId": {
                   "type": "string",
-                  "description": "Unique identifier for the enterprise in which zone belongs to."
+                  "description": "Unique identifier for the Enterprise in which inventory belongs to."
                 },
-                "centerId": {
+                "batchNumber": {
                   "type": "string",
-                  "description": "Unique identifier for the center in which zone belongs to."
+                  "description": "Unique batch number of the inventory"
                 },
-                "pincodes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "$ref": "#/definitions/centerresourcePincodeDetails"
-                  },
-                  "description": "List of Pincodes in which zone associated with."
+                "mfgDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Manufacturing date of the inventory."
                 },
-                "state": {
-                  "$ref": "#/definitions/commonState",
-                  "description": "State of the zone."
+                "expiryDate": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Expiry date of the inventory."
                 },
-                "origin": {
-                  "type": "object",
-                  "$ref": "#/definitions/commonOrigin",
-                  "description": "User origin details: like created time, update time etc"
+                "quantityUnits": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "quantity of the inventory"
+                },
+                "placeOfOrigin": {
+                  "type": "string",
+                  "description": "place of the inventory"
+                },
+                "basePrice": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Origin of the inventory"
                 },
                 "version": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "Version stores the DB version of the zone."
+                  "description": "Version stores the DB version of the inventory."
                 },
                 "tags": {
                   "type": "object",
                   "additionalProperties": {
                     "type": "string"
                   },
-                  "description": "Tags stores the key value pairs of the zone."
+                  "description": "Tags stores the key value pairs of the inventory."
                 }
               },
-              "description": "The Create/Update payload of the Zone.",
-              "title": "Zone create/update data payload",
+              "description": "The Create/Update payload of the Inventory.",
+              "title": "Inventory create/update data payload",
               "required": [
                 "name",
-                "enterpriseId",
-                "centerId"
+                "address",
+                "contact",
+                "email"
               ]
             }
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
       }
     },
-    "/v1/zones/{pincode}/center": {
-      "get": {
-        "summary": "center detail by pincode",
-        "operationId": "ZoneService_ListLocalityByZone",
+    "/v1/inventories/{id}/centers/{centerId}": {
+      "delete": {
+        "summary": "Delete Inventory",
+        "operationId": "InventoryService_Delete",
         "responses": {
           "200": {
-            "description": "Successful response of center detail",
+            "description": "Successful deleted the inventory resource",
             "schema": {
-              "$ref": "#/definitions/centerresourceCenterDetails"
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
+            "description": "Invalid data, Bad Request",
             "schema": {
-              "$ref": "#/definitions/centerresourceCenterDetails"
+              "$ref": "#/definitions/commonDResponse"
+            }
+          },
+          "404": {
+            "description": "Inventory Not Found",
+            "schema": {
+              "$ref": "#/definitions/commonDResponse"
             }
           },
           "default": {
@@ -337,149 +847,263 @@
         },
         "parameters": [
           {
-            "name": "pincode",
-            "description": "Pincode",
+            "name": "id",
+            "description": "Unique Identifier of the Inventory",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "centerId",
+            "description": "Unique Identifier of the Center in which Inventory belongs to.",
             "in": "path",
             "required": true,
             "type": "string"
           }
         ],
         "tags": [
-          "ZoneService"
+          "InventoryService"
         ]
       }
     }
   },
   "definitions": {
-    "centerresourceCenterDetails": {
-      "type": "object",
-      "properties": {
-        "zoneName": {
-          "type": "string",
-          "description": "Name of the zone"
-        },
-        "zoneId": {
-          "type": "string",
-          "description": "Unique identifier of the zone."
-        },
-        "centerId": {
-          "type": "string",
-          "description": "Unique identifier of the center."
-        },
-        "pincode": {
-          "type": "string",
-          "description": "Pincode of the zone"
-        },
-        "localities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of localities associated with particular pincode."
-        }
-      },
-      "description": "The PincodeDetails details",
-      "title": "PincodeDetails details",
-      "required": [
-        "zoneName",
-        "zoneId",
-        "centerId",
-        "pincode"
-      ]
-    },
-    "centerresourcePincodeDetails": {
-      "type": "object",
-      "properties": {
-        "pincode": {
-          "type": "string",
-          "description": "Pincode of the zone"
-        },
-        "details": {
-          "type": "string",
-          "description": "Details of the Pincode."
-        },
-        "localities": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of localities associated with particular pincode."
-        }
-      },
-      "description": "The PincodeDetails details",
-      "title": "PincodeDetails details",
-      "required": [
-        "code",
-        "localities"
-      ]
-    },
-    "centerresourceZone": {
+    "centerresourceInventory": {
       "type": "object",
       "example": {
-        "name": "dummy",
+        "skuid": "{skuId}",
         "enterpriseId": "{enterpriseId}",
-        "centerId": "{centerId}"
+        "basePrice": "100"
       },
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the zone."
-        },
         "id": {
           "type": "string",
-          "description": "Unique identifier for the zone."
+          "description": "Unique identifier of the Inventory."
         },
         "description": {
           "type": "string",
-          "description": "Description for the zone."
+          "description": "Description for the Inventory."
         },
-        "enterpriseId": {
+        "productId": {
           "type": "string",
-          "description": "Unique identifier for the enterprise in which zone belongs to."
+          "description": "Unique identifier for the product."
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product."
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique identifier for the sku."
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Name of the sku."
         },
         "centerId": {
           "type": "string",
-          "description": "Unique identifier for the center in which zone belongs to."
+          "description": "Unique identifier for the Center in which inventory belongs to."
         },
-        "pincodes": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/centerresourcePincodeDetails"
-          },
-          "description": "List of Pincodes in which zone associated with."
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the Enterprise in which inventory belongs to."
         },
-        "state": {
-          "$ref": "#/definitions/commonState",
-          "description": "State of the zone."
+        "batchNumber": {
+          "type": "string",
+          "description": "Unique batch number of the inventory"
         },
-        "origin": {
-          "type": "object",
-          "$ref": "#/definitions/commonOrigin",
-          "description": "User origin details: like created time, update time etc"
+        "mfgDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Manufacturing date of the inventory."
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Expiry date of the inventory."
+        },
+        "quantityUnits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the inventory"
+        },
+        "placeOfOrigin": {
+          "type": "string",
+          "description": "place of the inventory"
+        },
+        "basePrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Origin of the inventory"
         },
         "version": {
           "type": "integer",
           "format": "int32",
-          "description": "Version stores the DB version of the zone."
+          "description": "Version stores the DB version of the inventory."
         },
         "tags": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Tags stores the key value pairs of the zone."
+          "description": "Tags stores the key value pairs of the inventory."
         }
       },
-      "description": "The Create/Update payload of the Zone.",
-      "title": "Zone create/update data payload",
+      "description": "The Create/Update payload of the Inventory.",
+      "title": "Inventory create/update data payload",
       "required": [
         "name",
-        "enterpriseId",
-        "centerId"
+        "address",
+        "contact",
+        "email"
       ]
     },
-    "centerresourceZoneFilter": {
+    "centerresourceInventoryFilter": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Unique identifier for the product."
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique identifier for the sku."
+        },
+        "batchNumber": {
+          "type": "string",
+          "description": "Unique batch number of the inventory"
+        },
+        "mfgDateFrom": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Manufacturing date of the inventory."
+        },
+        "mfgDateTo": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Manufacturing date of the inventory."
+        },
+        "expiryFrom": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Expiry date of the inventory."
+        },
+        "expiryTo": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Expiry date of the inventory."
+        },
+        "pattern": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/commonKeyValue"
+          },
+          "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
+        },
+        "order": {
+          "$ref": "#/definitions/commonOrder",
+          "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
+        }
+      },
+      "description": "InventoryFilter request paylod used list the inventorys with the various filters like State, name etc.",
+      "title": "InventoryFilter payload detail"
+    },
+    "centerresourceInventoryInfo": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "Unique identenfier of the product selected"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product"
+        },
+        "skuId": {
+          "type": "string",
+          "description": "Unique identenfier of the sku selected"
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Label/Name for the SKU item"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the items"
+        },
+        "basePrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Base price of the item"
+        },
+        "invRef": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceInventoryQuantityRef"
+          },
+          "description": "List of inventories added to the cart"
+        }
+      },
+      "description": "InventoryInfo carries the various inventory related meta data.",
+      "title": "InventoryInfo carries the various inventory related meta data."
+    },
+    "centerresourceInventoryInfoList": {
+      "type": "object",
+      "properties": {
+        "centerId": {
+          "type": "string",
+          "description": "Unique identenfier of the center selected"
+        },
+        "inventories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceInventoryInfo"
+          },
+          "description": "List of inventories added to the cart"
+        }
+      },
+      "title": "InventoryInfoList is used by the internal API for blocking anf unblocking the inventories while procesing the order"
+    },
+    "centerresourceInventoryListResponse": {
+      "type": "object",
+      "properties": {
+        "inventories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceInventory"
+          },
+          "description": "List of inventories."
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "Inventory list response details.",
+      "title": "Inventory list response details"
+    },
+    "centerresourceInventoryQuantityRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identenfier of the inventory"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantityUnits that was blocked."
+        }
+      },
+      "description": "InventoryQuantityRef carries the InventoryId and quantity that was blocked.",
+      "title": "InventoryQuantityRef carries the InventoryId and quantity that was blocked."
+    },
+    "centerresourceProductInventoryFilter": {
       "type": "object",
       "properties": {
         "pattern": {
@@ -490,38 +1114,151 @@
           },
           "description": "KeyValue pattern is used for storing key-value pairs, key being the name of the field and value being value to it while querying the DB."
         },
-        "state": {
-          "$ref": "#/definitions/commonState",
-          "description": "State, filters based on the zone state"
-        },
         "order": {
-          "type": "object",
           "$ref": "#/definitions/commonOrder",
           "description": "Defines the order of the given key either by ASCENDING or DESCENDING"
         }
       },
-      "description": "ZoneFilter request paylod",
-      "title": "ZoneFilter payload detail"
+      "description": "ProductInventoryFilter request paylod used list the inventorys with the various filters like State, name etc.",
+      "title": "ProductInventoryFilter payload detail"
     },
-    "centerresourceZoneListResponse": {
+    "centerresourceProductInventoryStockListResponse": {
       "type": "object",
       "properties": {
-        "zones": {
+        "productStockInfo": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/centerresourceZone"
+            "$ref": "#/definitions/centerresourceProductStockInfo"
           },
-          "description": "List of zones."
+          "description": "List of product inventories added to the cart"
         },
         "cursor": {
-          "type": "object",
           "$ref": "#/definitions/commonCursor",
           "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
         }
       },
-      "description": "Zone list response details.",
-      "title": "Zone list response details"
+      "description": "ProductInventoryStockListResponse response for the stocks for the given product.",
+      "title": "ProductInventoryStockListResponse response for the stocks for the given product."
+    },
+    "centerresourceProductSkuInventoryStockListResponse": {
+      "type": "object",
+      "properties": {
+        "productSkuStockInfo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceProductSkuStockInfo"
+          },
+          "description": "List of inventories added to the cart"
+        },
+        "cursor": {
+          "$ref": "#/definitions/commonCursor",
+          "description": "Cursor helps in specifying the pagenation attributes like pageNo, offset, limit etc on the number of the records."
+        }
+      },
+      "description": "ProductSkuInventoryStockListResponse response for the stocks for the given product.",
+      "title": "ProductSkuInventoryStockListResponse response for the stocks for the given product."
+    },
+    "centerresourceProductSkuStockInfo": {
+      "type": "object",
+      "properties": {
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier for the Center in which inventory belongs to."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the Enterprise in which inventory belongs to."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Unique identenfier of the product selected"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product"
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+        },
+        "skus": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/centerresourceSkuStockInfo"
+          },
+          "description": "list of sku stock info"
+        }
+      },
+      "description": "ProductSkuStockInfo carries the various inventory related meta data.",
+      "title": "ProductSkuStockInfo carries the various inventory related meta data."
+    },
+    "centerresourceProductStockInfo": {
+      "type": "object",
+      "properties": {
+        "centerId": {
+          "type": "string",
+          "description": "Unique identifier for the Center in which inventory belongs to."
+        },
+        "enterpriseId": {
+          "type": "string",
+          "description": "Unique identifier for the Enterprise in which inventory belongs to."
+        },
+        "productId": {
+          "type": "string",
+          "description": "Unique identenfier of the product selected"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Name of the product"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the items"
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "Assets holds the map of key and bytes, key is the unique identifier of the SKU and byte data is the pictore of an SKU "
+        }
+      },
+      "description": "InventoryInfo carries the various inventory related meta data.",
+      "title": "InventoryInfo carries the various inventory related meta data."
+    },
+    "centerresourceSkuStockInfo": {
+      "type": "object",
+      "properties": {
+        "skuId": {
+          "type": "string",
+          "description": "Unique identenfier of the sku selected"
+        },
+        "skuName": {
+          "type": "string",
+          "description": "Label/Name for the SKU item"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "quantity of the items"
+        },
+        "basePrice": {
+          "type": "number",
+          "format": "float",
+          "description": "Base price of the item"
+        }
+      },
+      "description": "SkuStockInfo carries the various inventory related meta data.",
+      "title": "SkuStockInfo carries the various inventory related meta data."
     },
     "commonCursor": {
       "type": "object",
@@ -602,31 +1339,6 @@
         }
       }
     },
-    "commonOrigin": {
-      "type": "object",
-      "properties": {
-        "createdAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "User data: Created time"
-        },
-        "createdBy": {
-          "type": "string",
-          "description": "User data: Created By"
-        },
-        "updatedAt": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The time when the record was last updated."
-        },
-        "updatedBy": {
-          "type": "string",
-          "description": "User data: Updated By"
-        }
-      },
-      "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-      "title": "Origin object"
-    },
     "commonSortOrder": {
       "type": "string",
       "enum": [
@@ -635,23 +1347,6 @@
         "SORT_ORDER_DESCENDING"
       ],
       "default": "SORT_ORDER_UNSPECIFIED"
-    },
-    "commonState": {
-      "type": "string",
-      "enum": [
-        "STATE_UNSPECIFIED",
-        "STATE_CREATED",
-        "STATE_ACTIVE",
-        "STATE_SUSPENDED",
-        "STATE_CLOSED",
-        "STATE_PAUSED",
-        "STATE_PENDING",
-        "STATE_EXPIRED",
-        "STATE_FAILED",
-        "STATE_COMPLETE"
-      ],
-      "default": "STATE_UNSPECIFIED",
-      "description": " - STATE_UNSPECIFIED: Represents an unspecified or default state.\n - STATE_CREATED: The initial state when the object is created.\n - STATE_ACTIVE: The object is active and operational.\n - STATE_SUSPENDED: The object is temporarily suspended or inactive.\n - STATE_CLOSED: The object is closed or no longer in operation.\n - STATE_PAUSED: The object is paused.\n - STATE_PENDING: The object is still in pending.\n - STATE_EXPIRED: The object is expired.\n - STATE_FAILED: The object has FAILED.\n - STATE_COMPLETE: The object operation has completed."
     },
     "protobufAny": {
       "type": "object",
