@@ -1305,7 +1305,7 @@
         }
       },
       "description": "Origin objects holds the object's detila like creted time, updated time, updatedBY, creaatedBy",
-      "title": "DResponse object holds the return object on CREATE abd UPDATE request"
+      "title": "DResponse object holds the return object on CREATE and UPDATE request"
     },
     "commonKeyValue": {
       "type": "object",
